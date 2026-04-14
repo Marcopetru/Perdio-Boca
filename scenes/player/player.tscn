@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dryf7dmpm35ql"]
+
+[ext_resource type="Script" uid="uid://bpjntcdvevs2m" path="res://scripts/player/player.gd" id="1_gmlin"]
+[ext_resource type="Script" uid="uid://d3ua1d3nemu4h" path="res://scripts/player/combat_system.gd" id="2_lvxji"]
+[ext_resource type="Script" uid="uid://psqnhysb0dmj" path="res://scripts/player/movement.gd" id="3_p47bc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_75vfm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0owmy"]
+
+[node name="Player" type="CharacterBody3D" unique_id=534241689]
+script = ExtResource("1_gmlin")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1809145635]
+mesh = SubResource("BoxMesh_75vfm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=930534617]
+shape = SubResource("BoxShape3D_0owmy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=812496744]
+
+[node name="CombatSystem" type="Node3D" parent="." unique_id=1717590289]
+script = ExtResource("2_lvxji")
+
+[node name="Movement" type="Node3D" parent="." unique_id=748898319]
+script = ExtResource("3_p47bc")

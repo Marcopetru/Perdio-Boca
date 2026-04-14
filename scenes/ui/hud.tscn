@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://c8o7r0ja4a414"]
+
+[ext_resource type="Script" uid="uid://dryvrb3j31cv3" path="res://scripts/ui/hud.gd" id="1_0mwgc"]
+
+[node name="HUD" type="CanvasLayer" unique_id=9032079]
+script = ExtResource("1_0mwgc")
+
+[node name="HealthContainer" type="Control" parent="." unique_id=86950915]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthLabel" type="Label" parent="HealthContainer" unique_id=1761151998]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 157.0
+offset_bottom = 94.0
+theme_override_font_sizes/font_size = 24
+text = "HP: 100/100"
+
+[node name="HealthBar" type="ProgressBar" parent="HealthContainer" unique_id=288711964]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 50.0
+value = 100.0
+
+[node name="AmmoContainer" type="Control" parent="." unique_id=89530876]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AmmoLabel" type="Label" parent="AmmoContainer" unique_id=1813658285]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 150.0
+offset_bottom = 134.0
+theme_override_font_sizes/font_size = 20
+text = "Cervezas: 5"
+
+[node name="DebugLabel" type="Label" parent="." unique_id=154442471]
+offset_left = 20.0
+offset_top = 140.0
+offset_right = 136.0
+offset_bottom = 168.0
+theme_override_font_sizes/font_size = 20
+text = "ZONA: 1
+Enemigos: 0/2"
