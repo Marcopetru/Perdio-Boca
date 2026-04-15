@@ -76,8 +76,7 @@ offset_left = -330.0
 offset_top = 60.0
 offset_right = 20.0
 offset_bottom = 100.0
-max_value = 150.0
-value = 150.0
+value = 100.0
 
 [node name="BossHealthLabel" type="Label" parent="BossContainer" unique_id=133329697]
 layout_mode = 0
