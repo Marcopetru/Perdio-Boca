@@ -24,8 +24,12 @@ signal beer_ammo_changed(new_ammo)
 func _ready() -> void:
 	current_health = Constants.PLAYER_MAX_HEALTH
 	beer_ammo = Constants.PLAYER_BEER_AMMO
+	is_alive = true  # ← NUEVO: Resetear si estaba muerto
+	
 	emit_signal("health_changed", current_health)
 	emit_signal("beer_ammo_changed", beer_ammo)
+	
+	print("✅ Player inicializado - Vida: %d | Cervezas: %d" % [current_health, beer_ammo])
 
 func _physics_process(delta: float) -> void:
 	if not is_alive:

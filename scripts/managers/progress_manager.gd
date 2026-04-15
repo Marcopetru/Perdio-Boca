@@ -107,8 +107,16 @@ func on_zone_cleared() -> void:
 	
 	print("✅ Zona despejada. Puedes avanzar a la siguiente")
 	
-	#carga la siguiente zona
+	# Cargar la siguiente zona
 	current_zone += 1
+	
+	#Hay que verificar si hay más zonas
+	if current_zone >= zones.size():
+		# ¡No hay más zonas! Ir al boss
+		_go_to_boss()
+	else:
+		# Hay más zonas, activar la siguiente
+		_activate_zone(current_zone)
 
 func on_enemy_killed() -> void:
 	"""Se llama cuando matan un enemigo"""
