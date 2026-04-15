@@ -39,26 +39,30 @@ func _ready() -> void:
 	_update_health_display(player.current_health)
 	_update_ammo_display(player.beer_ammo)
 	
-	#Esperar un frame para que el Boss esté listo
+	# ← CAMBIO: Esperar 2 frames para que el Boss esté completamente listo
+	await get_tree().process_frame
 	await get_tree().process_frame
 	
-	#Encontrar al Boss
-	boss = get_tree().get_root().find_child("BossMcDonald", true, false)
+	# ← NUEVO: Encontrar al Boss
+	var boss_list = get_tree().get_nodes_in_group("boss")
 	
-	if boss == null:
-		print("❌ HUD Level 2: No encontré al Boss")
+	if boss_list.is_empty():
+		print("❌ HUD Level 2: No encontré al Boss (grupo 'boss' vacío)")
 		return
+	
+	boss = boss_list[0]
 	
 	print("✅ Boss encontrado: %s | Vida: %d/%d" % [boss.name, boss.current_health, boss.max_health])
 	
-	#Conectar signal de vida del Boss
+	# ← NUEVO: Conectar signal de vida del Boss
 	if boss.has_signal("health_changed"):
 		boss.health_changed.connect(_on_boss_health_changed)
 		print("✅ Signal 'health_changed' del Boss conectado")
 	else:
 		print("❌ El Boss NO tiene signal 'health_changed'")
 	
-	#Inicializar displays del Boss
+	# ← IMPORTANTE: Inicializar DESPUÉS de conectar el signal
+	# Esto asegura que el Boss tiene 150/150 HP
 	_update_boss_display(boss.current_health, boss.max_health)
 	boss_name_label.text = "McDonald's"
 	
