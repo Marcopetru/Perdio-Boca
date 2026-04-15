@@ -31,6 +31,9 @@ func _ready() -> void:
 	_update_health_display(player.current_health)
 	_update_ammo_display(player.beer_ammo)
 	
+	# ← CAMBIO: Esperar un frame para que el Boss esté listo
+	await get_tree().process_frame
+	
 	# ← NUEVO: Encontrar al Boss
 	boss = get_tree().get_root().find_child("Boss", true, false)
 	
@@ -38,9 +41,14 @@ func _ready() -> void:
 		print("❌ HUD Level 2: No encontré al Boss")
 		return
 	
+	print("✅ Boss encontrado: %s | Vida: %d/%d" % [boss.name, boss.current_health, boss.max_health])
+	
 	# ← NUEVO: Conectar signal de vida del Boss
 	if boss.has_signal("health_changed"):
 		boss.health_changed.connect(_on_boss_health_changed)
+		print("✅ Signal 'health_changed' del Boss conectado")
+	else:
+		print("❌ El Boss NO tiene signal 'health_changed'")
 	
 	# ← NUEVO: Inicializar displays del Boss
 	_update_boss_display(boss.current_health, boss.max_health)

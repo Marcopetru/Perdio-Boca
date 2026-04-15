@@ -2,13 +2,12 @@
 extends Area3D
 
 # ============== VARIABLES ==============
-var velocity = Vector3.ZERO
 var damage = Constants.BEER_DAMAGE
-var max_distance = 50.0  # Distancia máxima antes de desaparecer
-var traveled_distance = 0.0
+var max_fall_distance = 100.0  # Distancia máxima de caída
+var fallen_distance = 0.0
 
-var target_pos = Vector3.ZERO
-var speed = 15.0  # Velocidad de caída
+var start_pos = Vector3.ZERO
+var fall_speed = 5.0  #Velocidad de caída lineal
 
 var player_hit = false  # Para no golpear 2 veces
 
@@ -16,39 +15,40 @@ func _ready() -> void:
 	add_to_group("boss_projectile")
 
 func _physics_process(delta: float) -> void:
-	if target_pos == Vector3.ZERO:
-		return
 	
-	# Dirección hacia el destino
-	var direction = (target_pos - global_position).normalized()
+	position.y -= fall_speed * delta
 	
-	# Movimiento hacia el destino
-	velocity = direction * speed
-	position += velocity * delta
+	# Contar distancia caída
+	fallen_distance += fall_speed * delta
 	
-	# Contar distancia viajada
-	traveled_distance += velocity.length() * delta
-	
-	# Gravedad leve
-	velocity.y -= Constants.PLAYER_GRAVITY * delta * 0.3
-	
-	# Desaparecer si viajó demasiado o llegó al suelo
-	if traveled_distance > max_distance or position.y < -1.0:
-		print("💨 Proyectil del Boss desaparece")
+	# Desaparecer si cayó demasiado o llegó al suelo
+	if fallen_distance > max_fall_distance or position.y < -1.0:
+		print("💨 Proyectil del Boss desaparece (tocó piso)")
 		queue_free()
 		return
 	
 	# Detectar colisión con el jugador
 	_check_collision_with_player()
 
-func setup(spawn_position: Vector3, target: Vector3, dmg: int) -> void:
-	"""Configura el proyectil"""
+func setup(spawn_position: Vector3, target_x_z: Vector2, dmg: int) -> void:
+	"""Configura el proyectil
+	
+	spawn_position: Donde aparece (arriba en el cielo)
+	target_x_z: Coordenadas X,Z del suelo donde va a caer (Y se ignora)
+	dmg: Daño que causa
+	"""
 	
 	position = spawn_position
-	target_pos = target
-	damage = dmg
+	position.x = target_x_z.x  # Posicionar en X del destino
+	position.z = target_x_z.y  # Posicionar en Z del destino (Y es la altura)
 	
-	print("🍟 Proyectil del Boss creado: %s → %s" % [spawn_position, target_pos])
+	damage = dmg
+	start_pos = position
+	
+	print("🍟 Proyectil del Boss creado en (%.1f, %.1f, %.1f) - Caerá en (%.1f, %.1f)" % [
+		position.x, position.y, position.z,
+		target_x_z.x, target_x_z.y
+	])
 
 func _check_collision_with_player() -> void:
 	"""Detecta colisión con el jugador"""
@@ -57,7 +57,7 @@ func _check_collision_with_player() -> void:
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsShapeQueryParameters3D.new()
 	var sphere = SphereShape3D.new()
-	sphere.radius = 0.3  # Radio de detección (pequeño)
+	sphere.radius = 0.5  # Radio de detección
 	
 	query.shape = sphere
 	query.transform.origin = global_position
@@ -79,12 +79,12 @@ func _hit_player(player: Node3D) -> void:
 	
 	player_hit = true
 	
-	# Aplicar daño
-	player.take_damage(damage)
+	# Aplicar daño (10 puntos)
+	player.take_damage(10)
 	
 	# Aplicar knockback
 	var direction = (player.global_position - global_position).normalized()
-	var knockback_force = 5.0
+	var knockback_force = 3.0
 	player.take_knockback(direction * knockback_force)
 	
 	print("💥 ¡Proyectil del Boss impactó al jugador!")

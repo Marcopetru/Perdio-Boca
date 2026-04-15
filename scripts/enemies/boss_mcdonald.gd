@@ -28,8 +28,11 @@ func _ready() -> void:
 		print("❌ Boss: No encontré al jugador")
 		return
 	
+	#Delay antes de empezar a atacar (3 segundos)
+	attack_cooldown = 2.0
+	
 	print("✅ Boss McDonald's inicializado")
-	print("   Vida: %d | Ataque cada: %.1f segundos" % [max_health, attack_interval])
+	print("   Vida: %d | Ataque en: %.1f segundos" % [max_health, attack_cooldown])
 
 func _physics_process(delta: float) -> void:
 	if not is_alive or player == null:
@@ -57,7 +60,7 @@ func _attack() -> void:
 		_spawn_projectile()
 
 func _spawn_projectile() -> void:
-	"""Spawnea UN proyectil de papa/hamburguesa DENTRO del nivel"""
+	"""Spawnea UN proyectil que cae del cielo"""
 	
 	# Cargar escena del proyectil
 	var projectile_scene = load("res://scenes/projectiles/boss_projectile.tscn")
@@ -66,26 +69,18 @@ func _spawn_projectile() -> void:
 	# Agregar a la escena
 	get_tree().get_root().add_child(projectile)
 	
-	# Posición del Boss (donde aparece el proyectil)
-	var spawn_pos = global_position + Vector3(0, 5, 0)  # Arriba del Boss
+	#El proyectil aparece arriba (en el cielo)
+	var spawn_pos = Vector3(0, 20, 0)  # Arriba del nivel, en el centro
 	
-	#Destino aleatorio DENTRO del floor (20x20)
-	# Floor es 20x20, así que:
-	# X va de -10 a 10
-	# Z va de -10 a 10
-	var target_pos = Vector3(
+	#Destino aleatorio DENTRO del floor (20x20) - SOLO X y Z
+	var target_x_z = Vector2(
 		randf_range(-10, 10),  # X dentro del floor
-		0,                      # Al nivel del suelo
-		randf_range(-10, 10)    # Z dentro del floor
+		randf_range(-10, 10)   # Z dentro del floor
 	)
 	
-	# Configurar proyectil
-	projectile.setup(spawn_pos, target_pos, Constants.BEER_DAMAGE)
+	#Pasar X,Z del destino (no Position3D)
+	projectile.setup(spawn_pos, target_x_z, Constants.BEER_DAMAGE)
 	
-	print("  └─ Proyectil spawnado en (%.1f, %.1f, %.1f) → Target: (%.1f, %.1f, %.1f)" % [
-		spawn_pos.x, spawn_pos.y, spawn_pos.z,
-		target_pos.x, target_pos.y, target_pos.z
-	])
 
 func take_damage(damage: int) -> void:
 	"""Recibe daño"""
@@ -95,12 +90,13 @@ func take_damage(damage: int) -> void:
 	
 	print("💢 Boss recibe daño: %d | Vida: %d/%d" % [damage, current_health, max_health])
 	
-	# Parpadeo rojo
+	#Parpadeo rojo
 	_flash_red()
 	
 	if current_health <= 0:
 		die()
 
+#Parpadeo rojo al recibir daño
 func _flash_red() -> void:
 	"""Hace que el Boss parpadee en rojo al recibir daño"""
 	
@@ -122,27 +118,27 @@ func _flash_red() -> void:
 	mesh_instance.set_surface_override_material(0, material)
 
 func _update_phase() -> void:
-	"""Cambia de fase según la vida (aumenta dificultad)"""
+	"""Cambia de fase según la vida"""
 	
 	var health_percent = float(current_health) / float(max_health)
 	
 	if health_percent > 0.66 and current_phase != 1:
 		current_phase = 1
 		attack_interval = 2.0
-		projectiles_per_attack = 3
-		print("📊 Boss Fase 1 - Ataque lento")
+		projectiles_per_attack = 5  # ← CAMBIO: 3 → 5
+		print("📊 Boss Fase 1 - 5 proyectiles")
 	
 	elif health_percent > 0.33 and current_phase != 2:
 		current_phase = 2
 		attack_interval = 1.5
-		projectiles_per_attack = 4
-		print("📊 Boss Fase 2 - Ataque más rápido")
+		projectiles_per_attack = 7  # ← CAMBIO: 4 → 7
+		print("📊 Boss Fase 2 - 7 proyectiles")
 	
 	elif health_percent <= 0.33 and current_phase != 3:
 		current_phase = 3
 		attack_interval = 1.0
-		projectiles_per_attack = 5
-		print("📊 Boss Fase 3 - ATAQUE MÁXIMO!")
+		projectiles_per_attack = 9  # ← CAMBIO: 5 → 9
+		print("📊 Boss Fase 3 - 9 proyectiles - ¡¡¡MÁXIMO!!!")
 
 func die() -> void:
 	"""Muere"""

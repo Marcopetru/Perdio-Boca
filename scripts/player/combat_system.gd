@@ -74,7 +74,7 @@ func throw_beer() -> void:
 # ============== FUNCIONES AUXILIARES ==============
 
 func _apply_damage_in_range(detection_range: float, damage: int, knockback: float) -> void:
-	"""Detecta enemigos en rango y aplica daño + knockback"""
+	"""Detecta enemigos y al Boss en rango y aplica daño + knockback"""
 	
 	var space_state = player.get_world_3d().direct_space_state
 	var query = PhysicsShapeQueryParameters3D.new()
@@ -92,23 +92,24 @@ func _apply_damage_in_range(detection_range: float, damage: int, knockback: floa
 	for result in results:
 		var collider = result.collider
 		
-		# Verificar si es un enemigo
-		if collider.is_in_group("enemy"):
+		# ← CAMBIO: Detectar enemigos O el Boss
+		if collider.is_in_group("enemy") or collider.is_in_group("boss"):
 			# Aplicar daño
 			collider.take_damage(damage)
 			enemies_hit += 1
 			
-			# ← ARREGLO: Aplicar knockback correctamente
-			var direction = (collider.global_position - player.global_position).normalized()
-			var adjusted_knockback = knockback * (1.0 - Constants.ENEMY_KNOCKBACK_RESIST)
-			collider.take_knockback(direction * adjusted_knockback)
+			# ← CAMBIO: Solo knockback si es enemigo (NO al boss)
+			if collider.is_in_group("enemy"):
+				var direction = (collider.global_position - player.global_position).normalized()
+				var adjusted_knockback = knockback * (1.0 - Constants.ENEMY_KNOCKBACK_RESIST)
+				collider.take_knockback(direction * adjusted_knockback)
 			
-			print("✓ ¡Golpe acertado a enemigo!")
+			print("✓ ¡Golpe acertado!")
 	
 	if enemies_hit == 0:
 		print("✗ No había enemigos en rango")
 	else:
-		print("✓ Golpeaste ", enemies_hit, " enemigo(s)")
+		print("✓ Golpeaste ", enemies_hit, " objetivo(s)")
 
 func _create_beer_projectile() -> void:
 	"""Crea un proyectil de cerveza real"""
