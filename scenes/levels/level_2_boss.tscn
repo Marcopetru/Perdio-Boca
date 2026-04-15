@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bfa0q3tcktt8b"]
+
+[ext_resource type="Script" uid="uid://c53p6notioep2" path="res://scripts/camera/camera_controller.gd" id="1_ywrn7"]
+[ext_resource type="PackedScene" uid="uid://dryf7dmpm35ql" path="res://scenes/player/player.tscn" id="2_ufhlq"]
+[ext_resource type="PackedScene" uid="uid://bsgcdpp4vwq4i" path="res://scenes/ui/hud_level2.tscn" id="3_7gxiw"]
+[ext_resource type="Script" uid="uid://dackgi7maqogx" path="res://scripts/managers/progress_manager_level2.gd" id="3_ufhlq"]
+[ext_resource type="PackedScene" uid="uid://x4yklh6fk87d" path="res://scenes/enemies/boss_mcdonald.tscn" id="4_2mvti"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hs41y"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i88h5"]
+size = Vector3(20, 0.5, 20)
+
+[node name="Level2" type="Node3D" unique_id=1325907334]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1384986654]
+transform = Transform3D(1, 0, 0, 0, 0.99990255, 0.01396218, 0, -0.01396218, 0.99990255, 0, 4.161748, 7.128612)
+script = ExtResource("1_ywrn7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=67963833]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=697398853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=681635973]
+mesh = SubResource("BoxMesh_hs41y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=711210023]
+shape = SubResource("BoxShape3D_i88h5")
+
+[node name="Player" parent="." unique_id=534241689 instance=ExtResource("2_ufhlq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+
+[node name="ProgressManager" type="Node3D" parent="." unique_id=202437732]
+script = ExtResource("3_ufhlq")
+
+[node name="HUD2" parent="." unique_id=9032079 instance=ExtResource("3_7gxiw")]
+
+[node name="BossMcDonald" parent="." unique_id=1750455572 instance=ExtResource("4_2mvti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

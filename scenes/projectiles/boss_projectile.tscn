@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://be8mld5w24jdh"]
+
+[ext_resource type="Script" uid="uid://dglryhag4ls43" path="res://scripts/projectiles/boss_projectile.gd" id="1_3sspm"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3gj58"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3sspm"]
+albedo_color = Color(1, 1, 0.12156863, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_k5bii"]
+radius = 0.2
+
+[node name="BossProjectile" type="Area3D" unique_id=1980962261]
+script = ExtResource("1_3sspm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=767815723]
+mesh = SubResource("SphereMesh_3gj58")
+surface_material_override/0 = SubResource("StandardMaterial3D_3sspm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=70935540]
+shape = SubResource("SphereShape3D_k5bii")
