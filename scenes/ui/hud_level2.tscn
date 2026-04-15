@@ -63,24 +63,27 @@ grow_horizontal = 0
 
 [node name="BossNameLabel" type="Label" parent="BossContainer" unique_id=1925716979]
 layout_mode = 0
+offset_left = -330.0
 offset_top = 20.0
-offset_right = 255.0
+offset_right = -75.0
 offset_bottom = 54.0
 theme_override_font_sizes/font_size = 24
 text = "Mc Donald´s 9 de Julio"
 
 [node name="BossHealthBar" type="ProgressBar" parent="BossContainer" unique_id=84631585]
 layout_mode = 0
+offset_left = -330.0
 offset_top = 60.0
-offset_right = 350.0
+offset_right = 20.0
 offset_bottom = 100.0
 max_value = 150.0
 value = 150.0
 
 [node name="BossHealthLabel" type="Label" parent="BossContainer" unique_id=133329697]
 layout_mode = 0
+offset_left = -330.0
 offset_top = 100.0
-offset_right = 82.0
+offset_right = -248.0
 offset_bottom = 134.0
 theme_override_font_sizes/font_size = 24
 text = "HP: 0/0"
