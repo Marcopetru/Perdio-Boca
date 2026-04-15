@@ -43,7 +43,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	
 	#Encontrar al Boss
-	boss = get_tree().get_root().find_child("Boss", true, false)
+	boss = get_tree().get_root().find_child("BossMcDonald", true, false)
 	
 	if boss == null:
 		print("❌ HUD Level 2: No encontré al Boss")

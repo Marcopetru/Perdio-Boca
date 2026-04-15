@@ -38,9 +38,9 @@ func setup(spawn_position: Vector3, direction: Vector3, speed: float) -> void:
 	velocity = direction.normalized() * speed
 	look_at(position + velocity, Vector3.UP)
 
-# ← NUEVA FUNCIÓN: Detección manual
+#Detección manual
 func _check_collision_with_enemies() -> void:
-	"""Verifica colisión con enemigos usando raycast"""
+	"""Verifica colisión con enemigos O el Boss"""
 	
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsShapeQueryParameters3D.new()
@@ -55,23 +55,26 @@ func _check_collision_with_enemies() -> void:
 	for result in results:
 		var collider = result.collider
 		
-		if collider.is_in_group("enemy") and collider not in enemies_hit:
+		#Detectar enemigos O el Boss
+		if (collider.is_in_group("enemy") or collider.is_in_group("boss")) and collider not in enemies_hit:
 			_hit_enemy(collider)
 
 func _hit_enemy(enemy: Node3D) -> void:
-	"""Golpea un enemigo"""
+	"""Golpea un enemigo O el Boss"""
 	
 	enemies_hit.append(enemy)
 	
 	# Aplicar daño
 	enemy.take_damage(damage)
 	
-	# Aplicar knockback
-	var direction = velocity.normalized()
-	var adjusted_knockback = knockback * (1.0 - Constants.ENEMY_KNOCKBACK_RESIST)
-	enemy.take_knockback(direction * adjusted_knockback)
+	#Solo knockback si es enemigo (NO al boss)
+	if enemy.is_in_group("enemy"):
+		# Aplicar knockback
+		var direction = velocity.normalized()
+		var adjusted_knockback = knockback * (1.0 - Constants.ENEMY_KNOCKBACK_RESIST)
+		enemy.take_knockback(direction * adjusted_knockback)
 	
-	print("�� ¡Cerveza impactó a enemigo!")
+	print("🍺 ¡Cerveza impactó a ", enemy.name, "!")
 	
 	# Desaparecer después del impacto
 	queue_free()

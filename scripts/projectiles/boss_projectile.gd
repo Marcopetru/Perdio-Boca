@@ -51,7 +51,7 @@ func setup(spawn_position: Vector3, target_x_z: Vector2, dmg: int) -> void:
 	])
 
 func _check_collision_with_player() -> void:
-	"""Detecta colisión con el jugador"""
+	"""Detecta colisión SOLO con el jugador (NO con el Boss)"""
 	
 	# Verificar si el proyectil está cerca del jugador
 	var space_state = get_world_3d().direct_space_state
@@ -67,7 +67,7 @@ func _check_collision_with_player() -> void:
 	for result in results:
 		var collider = result.collider
 		
-		# Verificar si es el jugador
+		#SOLO Player, NO Boss
 		if collider.name == "Player" and not player_hit:
 			_hit_player(collider)
 
