@@ -28,8 +28,11 @@ func _ready() -> void:
 		print("❌ Boss: No encontré al jugador")
 		return
 	
-	#Delay antes de empezar a atacar (3 segundos)
+	# Delay antes de empezar a atacar
 	attack_cooldown = 2.0
+	
+	#Emitir signal al inicializarse
+	emit_signal("health_changed", current_health)
 	
 	print("✅ Boss McDonald's inicializado")
 	print("   Vida: %d | Ataque en: %.1f segundos" % [max_health, attack_cooldown])

@@ -2,20 +2,28 @@
 extends CanvasLayer
 
 # ============== REFERENCIAS ==============
-@onready var health_label: Label = $HealthContainer/HealthLabel
-@onready var ammo_label: Label = $AmmoContainer/AmmoLabel
-@onready var health_bar: ProgressBar = $HealthContainer/HealthBar
+var health_label: Label
+var ammo_label: Label
+var health_bar: ProgressBar
 
-# NUEVAS REFERENCIAS PARA BOSS ← 
-@onready var boss_name_label: Label = $BossContainer/BossNameLabel
-@onready var boss_health_label: Label = $BossContainer/BossHealthLabel
-@onready var boss_health_bar: ProgressBar = $BossContainer/BossHealthBar
+var boss_name_label: Label
+var boss_health_label: Label
+var boss_health_bar: ProgressBar
 
 # ============== VARIABLES ==============
 var player: Node3D = null
 var boss: Node3D = null
 
 func _ready() -> void:
+	#Obtener referencias DESPUÉS de que la escena esté lista
+	health_label = $HealthContainer/HealthLabel
+	ammo_label = $AmmoContainer/AmmoLabel
+	health_bar = $HealthContainer/HealthBar
+	
+	boss_name_label = $BossContainer/BossNameLabel
+	boss_health_label = $BossContainer/BossHealthLabel
+	boss_health_bar = $BossContainer/BossHealthBar
+	
 	# Encontrar al jugador
 	player = get_tree().get_root().find_child("Player", true, false)
 	
@@ -31,10 +39,10 @@ func _ready() -> void:
 	_update_health_display(player.current_health)
 	_update_ammo_display(player.beer_ammo)
 	
-	# ← CAMBIO: Esperar un frame para que el Boss esté listo
+	#Esperar un frame para que el Boss esté listo
 	await get_tree().process_frame
 	
-	# ← NUEVO: Encontrar al Boss
+	#Encontrar al Boss
 	boss = get_tree().get_root().find_child("Boss", true, false)
 	
 	if boss == null:
@@ -43,14 +51,14 @@ func _ready() -> void:
 	
 	print("✅ Boss encontrado: %s | Vida: %d/%d" % [boss.name, boss.current_health, boss.max_health])
 	
-	# ← NUEVO: Conectar signal de vida del Boss
+	#Conectar signal de vida del Boss
 	if boss.has_signal("health_changed"):
 		boss.health_changed.connect(_on_boss_health_changed)
 		print("✅ Signal 'health_changed' del Boss conectado")
 	else:
 		print("❌ El Boss NO tiene signal 'health_changed'")
 	
-	# ← NUEVO: Inicializar displays del Boss
+	#Inicializar displays del Boss
 	_update_boss_display(boss.current_health, boss.max_health)
 	boss_name_label.text = "McDonald's"
 	
@@ -74,6 +82,15 @@ func _on_player_ammo_changed(new_ammo: int) -> void:
 
 func _on_boss_health_changed(new_health: int) -> void:
 	"""Se llama cuando cambia la vida del Boss"""
+	
+	print("🔔 Signal health_changed recibido! Vida: %d" % new_health)
+	print("   Boss max_health: %d" % boss.max_health)
+	print("   boss_health_bar: ", boss_health_bar)
+	print("   boss_health_label: ", boss_health_label)
+	
+	if boss == null:
+		print("❌ Boss es NULL!")
+		return
 	
 	_update_boss_display(new_health, boss.max_health)
 	print("👹 HUD: Vida del Boss actualizada a %d" % new_health)
@@ -100,7 +117,7 @@ func _update_ammo_display(ammo: int) -> void:
 	
 	ammo_label.text = "Cervezas: %d" % ammo
 
-# ← NUEVA FUNCIÓN: Actualizar display del Boss
+#Actualizar display del Boss
 func _update_boss_display(health: int, max_health: int) -> void:
 	"""Actualiza la barra y label de vida del BOSS"""
 	
