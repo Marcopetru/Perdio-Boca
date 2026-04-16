@@ -66,12 +66,12 @@ func _physics_process(delta: float) -> void:
 	if input_vector.length() > 0.1:
 		last_direction = input_vector
 		_rotate_model(input_vector)
-		# Solo cambiar a walk si NO está atacando Y está en idle
-		if not is_attacking and animation_player.current_animation != "walk":
+		# Cambiar a walk si NO está atacando
+		if not is_attacking:
 			_play_animation("walk")
 	else:
-		# Solo cambiar a idle si NO está atacando Y está en walk
-		if not is_attacking and animation_player.current_animation != "idle":
+		# Cambiar a idle si NO está atacando
+		if not is_attacking:
 			_play_animation("idle")
 	
 	# Ataques
@@ -102,7 +102,8 @@ func _physics_process(delta: float) -> void:
 func _play_animation(anim_name: String) -> void:
 	"""Reproduce una animación"""
 	if animation_player:
-		if animation_player.current_animation != anim_name:
+		# Si no está reproduciendo nada o es diferente, reproducer
+		if animation_player.current_animation != anim_name or not animation_player.is_playing():
 			animation_player.play(anim_name)
 
 #Rotar modelo según dirección
