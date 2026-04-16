@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bf2wru8fmdcoj"]
+
+[ext_resource type="PackedScene" uid="uid://hyvkk4nd4e42" path="res://assets/3D props/tachoBasura.glb" id="1_kvclj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e86s4"]
+size = Vector3(1.8979492, 2.3614502, 3.1276855)
+
+[node name="StaticBody3D" type="StaticBody3D" unique_id=1298075815]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1731049883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1340332, 1.1690606, -0.39285278)
+shape = SubResource("BoxShape3D_e86s4")
+
+[node name="tachoBasura2" parent="." unique_id=1299490241 instance=ExtResource("1_kvclj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.537712, 0, -11.622716)

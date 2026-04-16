@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bc2t8xvhi4cql"]
+
+[ext_resource type="PackedScene" uid="uid://j38kn4rsmgsf" path="res://assets/3D props/Cono_01.glb" id="1_ru53u"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3rdge"]
+radius = 0.8466797
+
+[node name="Cono_01" type="StaticBody3D" unique_id=767162040]
+
+[node name="Cono_01" parent="." unique_id=792443979 instance=ExtResource("1_ru53u")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=859019641]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+shape = SubResource("CylinderShape3D_3rdge")

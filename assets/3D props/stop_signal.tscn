@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://nygyu8wbwpwj"]
+
+[ext_resource type="PackedScene" uid="uid://ll5uf60k1egi" path="res://assets/3D props/StopSignal.glb" id="1_nnyol"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_urtw0"]
+height = 2.8232422
+radius = 0.047851563
+
+[node name="StopSignal" type="StaticBody3D" unique_id=101713528]
+
+[node name="StopSignal" parent="." unique_id=436641701 instance=ExtResource("1_nnyol")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=630198921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3681939, -0.028869748)
+shape = SubResource("CylinderShape3D_urtw0")
