@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b3sepw581k08a"]
+
+[ext_resource type="PackedScene" uid="uid://c2tw8ojki1rt7" path="res://assets/3D props/PosteLuz.glb" id="1_5alc4"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ju18p"]
+height = 4.7753906
+radius = 0.20019531
+
+[node name="PosteLuz" type="StaticBody3D" unique_id=31547133]
+
+[node name="PosteLuz" parent="." unique_id=487679469 instance=ExtResource("1_5alc4")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1025361432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075193435, 2.3937876, 0)
+shape = SubResource("CylinderShape3D_ju18p")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cknwhvgdn6gyc"]
+
+[ext_resource type="PackedScene" uid="uid://bmqnxw2g826rx" path="res://assets/3D props/BolsaBasura.glb" id="1_5vgwq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_168my"]
+size = Vector3(0.91015625, 0.72125244, 1)
+
+[node name="BolsaBasura" type="StaticBody3D" unique_id=398903223]
+
+[node name="BolsaBasura" parent="." unique_id=1070695628 instance=ExtResource("1_5vgwq")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=335130348]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.044921875, 0.0066833496, 0)
+shape = SubResource("BoxShape3D_168my")

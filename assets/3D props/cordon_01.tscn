@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b600j5khgljb4"]
+
+[ext_resource type="PackedScene" uid="uid://bjeajoohv42q5" path="res://assets/3D props/Cordon_01.glb" id="1_l1osv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p6346"]
+size = Vector3(0.59765625, 0.28448486, 5.9368896)
+
+[node name="Cordon_01" type="StaticBody3D" unique_id=1026970962]
+
+[node name="Cordon_01" parent="." unique_id=59960799 instance=ExtResource("1_l1osv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.944656, 0, -14.344524)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1973976358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3984375, -0.36681724, -0.093811035)
+shape = SubResource("BoxShape3D_p6346")

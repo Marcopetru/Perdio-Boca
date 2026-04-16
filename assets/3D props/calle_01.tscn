@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bq154mu67bagv"]
+
+[ext_resource type="PackedScene" uid="uid://d1y8rejwvxybe" path="res://assets/3D props/calle_01.glb" id="1_4vxp6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3q6m"]
+size = Vector3(3.9507446, 0.49847412, 5.942383)
+
+[node name="Calle_01" type="StaticBody3D" unique_id=1272001233]
+
+[node name="calle_01" parent="." unique_id=1729938768 instance=ExtResource("1_4vxp6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.035496, 0, -2.2821236)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=441346353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33920288, -0.25076294, 0.14013672)
+shape = SubResource("BoxShape3D_n3q6m")
