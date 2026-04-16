@@ -3,13 +3,19 @@ extends CharacterBody3D
 
 # ============== REFERENCIAS ==============
 var player: Node3D = null
+@onready var animation_player = $"AnimationPlayer"  # para las animaciones
+@onready var model = self  # para rotar el modelo
 
 # ============== VARIABLES ==============
 var current_health: int
 var is_alive: bool = true
 var attack_cooldown: float = 0.0
-var knockback_velocity = Vector3.ZERO  # ← NUEVO
-var knockback_duration = 0.0  # ← NUEVO
+var knockback_velocity = Vector3.ZERO
+var knockback_duration = 0.0
+
+#VARIABLES PARA ANIMACIÓN
+var last_direction = Vector3(0, 0, -1)  # Dirección hacia la cual mira el enemigo
+var is_attacking: bool = false  # Para saber si está en animación de ataque
 
 # ============== SIGNALS ==============
 signal died
@@ -23,26 +29,44 @@ func _physics_process(delta: float) -> void:
 	if not is_alive or player == null:
 		return
 	
+	# Decrementar cooldown de ataque
 	attack_cooldown = max(attack_cooldown - delta, 0.0)
 	
-	# ← NUEVO: Aplicar knockback
+	# Procesar knockback
 	knockback_duration = max(knockback_duration - delta, 0.0)
+	
 	if knockback_duration > 0:
+		# Si está siendo empujado, aplicar knockback
 		velocity.x = knockback_velocity.x
 		velocity.z = knockback_velocity.z
+		# No anima mientras está en knockback
 	else:
 		# Comportamiento normal si no está siendo empujado
 		var distance_to_player = global_position.distance_to(player.global_position)
 		
 		if distance_to_player > Constants.ENEMY_ATTACK_RANGE:
+			# Perseguir al jugador
 			var direction = (player.global_position - global_position).normalized()
 			velocity.x = direction.x * Constants.ENEMY_SPEED
 			velocity.z = direction.z * Constants.ENEMY_SPEED
+			
+			# Rotar modelo hacia el jugador
+			_rotate_model(direction)
+			
+			#Reproducir animación de caminar si no está atacando
+			if not is_attacking and animation_player.current_animation != "walk":
+				animation_player.play("walk")
 		else:
+			# Dentro de rango de ataque: parar de moverse
 			velocity.x = 0
 			velocity.z = 0
+			
+			#Reproducir animación idle si no está atacando
+			if not is_attacking and animation_player.current_animation != "idle":
+				animation_player.play("idle")
 		
-		if distance_to_player < Constants.ENEMY_ATTACK_RANGE and attack_cooldown <= 0:
+		#Solo atacar si está en rango, no está en cooldown y no está atacando
+		if distance_to_player < Constants.ENEMY_ATTACK_RANGE and attack_cooldown <= 0 and not is_attacking:
 			attack()
 	
 	# Gravedad
@@ -59,28 +83,52 @@ func take_knockback(knockback_vector: Vector3) -> void:
 	knockback_duration = 0.15  # Duración del empuje en segundos
 	print("💨 Enemigo recibe knockback")
 
+#Rotar hacia la dirección
+func _rotate_model(direction: Vector3) -> void:
+	"""Rota el modelo hacia la dirección de movimiento"""
+	if model == null or direction.length() < 0.1:
+		return
+	
+	# Calcular ángulo: invertir X para que coincida con las animaciones
+	var angle = atan2(-direction.x, -direction.z)
+	
+	# Sumar 180° porque el modelo mira hacia atrás por defecto
+	model.rotation.y = angle + PI
+
 func attack() -> void:
-	attack_cooldown = Constants.ENEMY_ATTACK_COOLDOWN
+	"""Ataque del enemigo con animación y cooldown mejorado"""
+	is_attacking = true  #Marca que está atacando
+	attack_cooldown = Constants.ENEMY_ATTACK_COOLDOWN  # Establece cooldown
+	
 	if player:
+		# Reproducir animación de ataque
+		if animation_player:  # ← NUEVO
+			animation_player.play("attack")
+		
+		# Aplicar daño al jugador
 		player.take_damage(Constants.ENEMY_DAMAGE)
 		
-		# ← NUEVO: Aplicar knockback al jugador
+		# Aplicar knockback al jugador
 		var direction = (player.global_position - global_position).normalized()
-		player.take_knockback(direction * 3.0)  # 3.0 es la fuerza del knockback
+		player.take_knockback(direction * 3.0)
 	
-	print("⚔️ ¡Enemigo atacó!")
+	#Esperar a que termine la animación de ataque
+	if animation_player:
+		# Esperar a que termine la animación (ajusta el tiempo según tu animación)
+		await get_tree().create_timer(0.6).timeout
+	
+	is_attacking = false  #Ya terminó de atacar
 
 func take_damage(damage: int) -> void:
 	current_health -= damage
-	print("🩹 Enemigo recibe daño. Vida: ", current_health, "/", Constants.ENEMY_HEALTH)
 	
-	# ← NUEVO: Parpadeo rojo al recibir daño
+	#Parpadeo rojo al recibir daño
 	_flash_red()
 	
 	if current_health <= 0:
 		die()
 
-# ← NUEVA FUNCIÓN
+
 func _flash_red() -> void:
 	"""Hace que el enemigo parpadee en rojo al recibir daño"""
 	
@@ -103,6 +151,5 @@ func _flash_red() -> void:
 
 func die() -> void:
 	is_alive = false
-	print("💀 Enemigo muere")
 	emit_signal("died")
 	queue_free()
