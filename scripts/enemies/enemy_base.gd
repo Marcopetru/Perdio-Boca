@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	self.velocity = velocity
 	move_and_slide()
 
-# ← NUEVO: Función para recibir knockback
+#Función para recibir knockback
 func take_knockback(knockback_vector: Vector3) -> void:
 	"""Recibe un empuje"""
 	knockback_velocity = knockback_vector

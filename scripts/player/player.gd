@@ -92,6 +92,20 @@ func _rotate_model(direction: Vector3) -> void:
 	var angle = atan2(direction.x, direction.z)
 	model.rotation.y = angle
 
+func take_damage(damage: int) -> void:
+	"""Recibe daño"""
+	
+	current_health -= damage
+	emit_signal("health_changed", current_health)
+	
+	print("💢 Jugador recibe daño: ", damage, " | Vida: ", current_health)
+	
+	# Parpadeo rojo al recibir daño
+	_flash_red()
+	
+	if current_health <= 0:
+		die()
+
 #Parpadeo rojo
 func _flash_red() -> void:
 	"""Hace que el jugador parpadee en rojo al recibir daño"""
