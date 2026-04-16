@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cbwur0cy2yp6n"]
+
+[ext_resource type="PackedScene" uid="uid://cfsy60twlwlbb" path="res://assets/3D props/Colectivo.glb" id="1_ytqlj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8kbwg"]
+size = Vector3(2.5533142, 0.6880493, 0.60375977)
+
+[node name="Colectivo" type="StaticBody3D" unique_id=26068673]
+
+[node name="Colectivo" parent="." unique_id=1012003752 instance=ExtResource("1_ytqlj")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1342634996]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -0.34828186, 7.9795837, -0.02746582)
+shape = SubResource("BoxShape3D_8kbwg")
