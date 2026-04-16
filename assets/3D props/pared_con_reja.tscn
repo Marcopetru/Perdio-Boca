@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://3smxeqjixc7m"]
+
+[ext_resource type="PackedScene" uid="uid://dirpj2nod8813" path="res://assets/3D props/ParedConReja.glb" id="1_3yeup"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yrnwc"]
+size = Vector3(2.614746, 2.399994, 0.47149658)
+
+[node name="ParedConReja" type="StaticBody3D" unique_id=1812819428]
+
+[node name="ParedConReja" parent="." unique_id=1316481792 instance=ExtResource("1_3yeup")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1499598844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0026855469, 0.23509216, 0.006902933)
+shape = SubResource("BoxShape3D_yrnwc")
