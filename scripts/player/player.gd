@@ -66,10 +66,12 @@ func _physics_process(delta: float) -> void:
 	if input_vector.length() > 0.1:
 		last_direction = input_vector
 		_rotate_model(input_vector)
-		if not is_attacking:
+		# Solo cambiar a walk si NO está atacando Y está en idle
+		if not is_attacking and animation_player.current_animation != "walk":
 			_play_animation("walk")
 	else:
-		if not is_attacking:
+		# Solo cambiar a idle si NO está atacando Y está en walk
+		if not is_attacking and animation_player.current_animation != "idle":
 			_play_animation("idle")
 	
 	# Ataques
@@ -109,7 +111,8 @@ func _rotate_model(direction: Vector3) -> void:
 	if model == null or direction.length() < 0.1:
 		return
 	
-	# Calcular ángulo correcto
+	# Calcular ángulo: el modelo mira hacia -Z por defecto
+	# Ajustamos para que coincida con la dirección
 	var angle = atan2(direction.x, direction.z)
 	model.rotation.y = angle
 
@@ -121,9 +124,6 @@ func take_damage(damage: int) -> void:
 	
 	print("💢 Jugador recibe daño: ", damage, " | Vida: ", current_health)
 	
-	# Reproducir animación de daño
-	_play_animation("Damaged")
-	
 	# Parpadeo rojo al recibir daño
 	_flash_red()
 	
@@ -134,25 +134,25 @@ func take_damage(damage: int) -> void:
 func _flash_red() -> void:
 	"""Hace que el jugador parpadee en rojo al recibir daño"""
 	
-	# Cambiar a rojo el modelo
 	if model == null:
 		return
 	
 	# Obtener todos los meshes del modelo
 	var mesh_instances = _get_all_mesh_instances(model)
 	
+	# Cambiar a rojo
 	for mesh_inst in mesh_instances:
-		var material = StandardMaterial3D.new()
-		material.albedo_color = Color.RED
-		mesh_inst.set_surface_override_material(0, material)
+		var original_material = mesh_inst.material_override
+		var red_material = StandardMaterial3D.new()
+		red_material.albedo_color = Color.RED
+		mesh_inst.material_override = red_material
 	
-	# Revertir después de 0.15 segundos
-	await get_tree().create_timer(0.15).timeout
+	# Revertir después de 0.2 segundos
+	await get_tree().create_timer(0.2).timeout
 	
+	# Restaurar material original
 	for mesh_inst in mesh_instances:
-		var material = StandardMaterial3D.new()
-		material.albedo_color = Color.WHITE
-		mesh_inst.set_surface_override_material(0, material)
+		mesh_inst.material_override = null
 
 func _get_all_mesh_instances(node: Node) -> Array:
 	"""Obtiene todos los MeshInstance3D de un nodo y sus hijos"""
