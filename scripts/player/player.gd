@@ -2,9 +2,10 @@
 extends CharacterBody3D
 
 # ============== REFERENCIAS ==============
-@onready var animation_player = $AnimationPlayer
+@onready var animation_player = $"Anim bostero/AnimationPlayer"
 @onready var combat_system = $CombatSystem
 @onready var movement_component = $Movement
+@onready var model = $"Anim bostero"  #Para rotar el modelo
 
 # ============== VARIABLES DE ESTADO ==============
 var current_health: int
@@ -12,9 +13,12 @@ var is_alive: bool = true
 var is_attacking: bool = false
 var beer_ammo: int
 
-# ← NUEVO: Variables de knockback
+#Variables de knockback
 var knockback_velocity = Vector3.ZERO
 var knockback_duration = 0.0
+
+#Variable de dirección actual
+var last_direction = Vector3(0, 0, -1)  # Mira hacia adelante por defecto
 
 # ============== SEÑALES ==============
 signal health_changed(new_health)
@@ -24,10 +28,14 @@ signal beer_ammo_changed(new_ammo)
 func _ready() -> void:
 	current_health = Constants.PLAYER_MAX_HEALTH
 	beer_ammo = Constants.PLAYER_BEER_AMMO
-	is_alive = true  # ← NUEVO: Resetear si estaba muerto
+	is_alive = true
 	
 	emit_signal("health_changed", current_health)
 	emit_signal("beer_ammo_changed", beer_ammo)
+	
+	# Reproducir animación idle al empezar
+	if animation_player:
+		animation_player.play("idle")
 	
 	print("✅ Player inicializado - Vida: %d | Cervezas: %d" % [current_health, beer_ammo])
 
@@ -49,34 +57,42 @@ func _physics_process(delta: float) -> void:
 		# Movimiento normal
 		movement_component.process(delta, input_vector)
 	
+	# ← NUEVO: Rotar modelo según dirección
+	if input_vector.length() > 0.1:
+		last_direction = input_vector
+		_rotate_model(input_vector)
+		_play_animation("walk")  # ← NUEVO: Caminar si hay input
+	else:
+		_play_animation("idle")  # ← NUEVO: Idle si no hay input
+	
 	# Ataques
 	if Input.is_action_just_pressed("attack_punch"):
 		combat_system.punch()
+		_play_animation("punch_02")  # ← NUEVO: Animar puño
 	
 	if Input.is_action_just_pressed("attack_beer") and beer_ammo > 0:
 		combat_system.throw_beer()
 		beer_ammo -= 1
 		emit_signal("beer_ammo_changed", beer_ammo)
+		_play_animation("throw")  # ← NUEVO: Animar lanzar
 
-func get_input() -> Vector3:
-	var input = Vector3.ZERO
-	input.x = Input.get_axis("ui_left", "ui_right")
-	input.z = Input.get_axis("ui_up", "ui_down")
-	return input.normalized()
+#Reproducir animación
+func _play_animation(anim_name: String) -> void:
+	"""Reproduce una animación sin interrumpir ataques"""
+	if animation_player and not is_attacking:
+		if animation_player.current_animation != anim_name:
+			animation_player.play(anim_name)
 
-func take_damage(damage: int) -> void:
-	current_health -= damage
-	emit_signal("health_changed", current_health)
+#Rotar modelo según dirección
+func _rotate_model(direction: Vector3) -> void:
+	"""Rota el modelo hacia la dirección de movimiento"""
+	if model == null or direction.length() < 0.1:
+		return
 	
-	print("💢 Jugador recibe daño: ", damage, " | Vida: ", current_health)
-	
-	# ← NUEVO: Parpadeo rojo al recibir daño
-	_flash_red()
-	
-	if current_health <= 0:
-		die()
+	var angle = atan2(direction.x, direction.z)
+	model.rotation.y = angle
 
-# ← NUEVA FUNCIÓN: Parpadeo rojo
+#Parpadeo rojo
 func _flash_red() -> void:
 	"""Hace que el jugador parpadee en rojo al recibir daño"""
 	
@@ -97,7 +113,7 @@ func _flash_red() -> void:
 	material.albedo_color = Color.WHITE
 	mesh_instance.set_surface_override_material(0, material)
 
-# ← NUEVA FUNCIÓN: Recibir knockback
+#Recibir knockback
 func take_knockback(knockback_vector: Vector3) -> void:
 	"""Recibe un empuje"""
 	var adjusted_knockback = knockback_vector * (1.0 - Constants.PLAYER_KNOCKBACK_RESIST)
@@ -110,3 +126,9 @@ func die() -> void:
 	is_alive = false
 	emit_signal("died")
 	print("💀 ¡Jugador muere!")
+	
+func get_input() -> Vector3:
+	var input = Vector3.ZERO
+	input.x = Input.get_axis("ui_left", "ui_right")
+	input.z = Input.get_axis("ui_up", "ui_down")
+	return input.normalized()
