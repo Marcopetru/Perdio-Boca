@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cl6bfi8y1blwa"
+path="res://.godot/imported/Pasos 2.wav-3121a9a5096307caabc7e20ff25c8480.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Pasos 2.wav"
+dest_files=["res://.godot/imported/Pasos 2.wav-3121a9a5096307caabc7e20ff25c8480.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
