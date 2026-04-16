@@ -130,7 +130,6 @@ func take_damage(damage: int) -> void:
 	if current_health <= 0:
 		die()
 
-#Parpadeo rojo
 func _flash_red() -> void:
 	"""Hace que el jugador parpadee en rojo al recibir daño"""
 	
@@ -142,7 +141,6 @@ func _flash_red() -> void:
 	
 	# Cambiar a rojo
 	for mesh_inst in mesh_instances:
-		var original_material = mesh_inst.material_override
 		var red_material = StandardMaterial3D.new()
 		red_material.albedo_color = Color.RED
 		mesh_inst.material_override = red_material
