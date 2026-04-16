@@ -6,6 +6,9 @@ extends CharacterBody3D
 @onready var combat_system = $CombatSystem
 @onready var movement_component = $Movement
 @onready var model = self #para rotar al modelo
+@onready var sfx_player = $SFXPlayer  # ← NUEVO
+var footstep_timer: float = 0.0  #para controlar frecuencia de pasos
+const FOOTSTEP_INTERVAL: float = 0.4  #cada 0.4 segundos
 
 # ============== VARIABLES DE ESTADO ==============
 var current_health: int
@@ -70,11 +73,20 @@ func _physics_process(delta: float) -> void:
 		if not is_attacking and animation_player.current_animation != "walk":
 			print("▶️ Cambiando a: walk")
 			_play_animation("walk")
+		
+		#Reproducir sonido de pasos mientras camina
+		footstep_timer -= delta
+		if footstep_timer <= 0:
+			_play_footstep_sound()
+			footstep_timer = FOOTSTEP_INTERVAL
 	else:
 		# Cambiar a idle si NO está atacando
 		if not is_attacking and animation_player.current_animation != "idle":
 			print("▶️ Cambiando a: idle")
 			_play_animation("idle")
+		
+		#Resetear timer si no se mueve
+		footstep_timer = 0.0
 	
 	# Ataques
 	if Input.is_action_just_pressed("attack_punch"):
@@ -177,8 +189,24 @@ func die() -> void:
 	emit_signal("died")
 	print("💀 ¡Jugador muere!")
 	
+	
 func get_input() -> Vector3:
 	var input = Vector3.ZERO
 	input.x = Input.get_axis("ui_left", "ui_right")
 	input.z = Input.get_axis("ui_up", "ui_down")
 	return input.normalized()
+	
+	
+func _play_footstep_sound() -> void:
+	"""Reproduce el sonido de un paso"""
+	if sfx_player == null:
+		return
+	
+	var audio_stream = load("res://assets/audio/sfx/Pasos 2.wav")
+	
+	if audio_stream == null:
+		print("⚠️ No se pudo cargar el sonido de pasos")
+		return
+	
+	sfx_player.stream = audio_stream
+	sfx_player.play()

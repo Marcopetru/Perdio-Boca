@@ -29,10 +29,8 @@ func punch() -> void:
 
 	emit_signal("attack_started", "punch")
 
-	print("🥊 PUÑO - Daño: ", Constants.PUNCH_DAMAGE, " | Rango: ", Constants.PUNCH_RANGE)
-
-	# Reproducir sonido placeholder
-	_play_sound("punch_impact")
+	#Reproducir sonido de golpe
+	_play_sound("res://assets/audio/sfx/Golpe 1.wav")
 
 	# Detectar enemigos en rango
 	_apply_damage_in_range(
@@ -40,9 +38,6 @@ func punch() -> void:
 		Constants.PUNCH_DAMAGE,
 		Constants.PUNCH_KNOCKBACK
 	)
-
-	# Animar (placeholder: cambiar color)
-	_animate_attack("punch")
 
 	emit_signal("attack_finished", "punch")
 	is_attacking = false
@@ -57,16 +52,11 @@ func throw_beer() -> void:
 
 	emit_signal("attack_started", "beer")
 
-	print("🍺 CERVEZA - Daño: ", Constants.BEER_DAMAGE, " | Rango: ", Constants.BEER_RANGE)
-
-	# Reproducir sonido
-	_play_sound("beer_throw")
+	#Reproducir sonido de lanzamiento
+	_play_sound("res://assets/audio/sfx/Cerveza 1.wav")
 
 	# Crear proyectil
 	_create_beer_projectile()
-
-	# Animar
-	_animate_attack("beer")
 
 	emit_signal("attack_finished", "beer")
 	is_attacking = false
@@ -88,28 +78,18 @@ func _apply_damage_in_range(detection_range: float, damage: int, knockback: floa
 	# Detectar todos los colisionadores en la esfera
 	var results = space_state.intersect_shape(query)
 	
-	var enemies_hit = 0
 	for result in results:
 		var collider = result.collider
-		
-		# ← CAMBIO: Detectar enemigos O el Boss
+		#Detectar enemigos O el Boss
 		if collider.is_in_group("enemy") or collider.is_in_group("boss"):
 			# Aplicar daño
 			collider.take_damage(damage)
-			enemies_hit += 1
 			
-			# ← CAMBIO: Solo knockback si es enemigo (NO al boss)
+			#Solo knockback si es enemigo (NO al boss)
 			if collider.is_in_group("enemy"):
 				var direction = (collider.global_position - player.global_position).normalized()
 				var adjusted_knockback = knockback * (1.0 - Constants.ENEMY_KNOCKBACK_RESIST)
 				collider.take_knockback(direction * adjusted_knockback)
-			
-			print("✓ ¡Golpe acertado!")
-	
-	if enemies_hit == 0:
-		print("✗ No había enemigos en rango")
-	else:
-		print("✓ Golpeaste ", enemies_hit, " objetivo(s)")
 
 func _create_beer_projectile() -> void:
 	"""Crea un proyectil de cerveza real"""
@@ -128,17 +108,13 @@ func _create_beer_projectile() -> void:
 	
 	projectile.setup(spawn_pos, direction, 15.0)
 
-func _animate_attack(attack_type: String) -> void:
-	"""Placeholder de animación - sin efecto visual por ahora"""
+func _play_sound(sound_path: String) -> void:
+	"""Reproduce un sonido de efecto"""
 	
-	# Cuando tengamos animaciones reales, aquí reproduciremos la animación
-	# Por ahora solo feedback de sonido (en _play_sound)
-	
-	print("⚡ Ataque: ", attack_type)
-
-func _play_sound(sound_name: String) -> void:
-	"""Placeholder para reproducir sonidos"""
-
-	print("🔊 Sonido: ", sound_name)
-
-	# TODO: Integrar AudioStreamPlayer cuando tengamos los SFX reales
+	# Obtener el AudioStreamPlayer del jugador
+	var sfx_player = player.get_node_or_null("SFXPlayer")
+	# Cargar el sonido
+	var audio_stream = load(sound_path)
+	# Reproducir
+	sfx_player.stream = audio_stream
+	sfx_player.play()

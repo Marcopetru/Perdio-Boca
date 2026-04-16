@@ -23,3 +23,5 @@ script = ExtResource("3_p47bc")
 
 [node name="Anim bostero" parent="." unique_id=549629701 instance=ExtResource("4_lvxji")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="." unique_id=1806888215]
