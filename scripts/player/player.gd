@@ -12,6 +12,8 @@ var current_health: int
 var is_alive: bool = true
 var is_attacking: bool = false
 var beer_ammo: int
+var punch_cooldown: float = 0.0
+var beer_cooldown: float = 0.0
 
 #Variables de knockback
 var knockback_velocity = Vector3.ZERO
@@ -43,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	if not is_alive:
 		return
 	
-	# ← NUEVO: Procesar knockback
+	#Procesar knockback
 	knockback_duration = max(knockback_duration - delta, 0.0)
 	
 	var input_vector = get_input()
@@ -57,7 +59,7 @@ func _physics_process(delta: float) -> void:
 		# Movimiento normal
 		movement_component.process(delta, input_vector)
 	
-	# ← NUEVO: Rotar modelo según dirección
+	#Rotar modelo según dirección
 	if input_vector.length() > 0.1:
 		last_direction = input_vector
 		_rotate_model(input_vector)
@@ -69,29 +71,34 @@ func _physics_process(delta: float) -> void:
 	
 	# Ataques
 	if Input.is_action_just_pressed("attack_punch"):
-		is_attacking = true  # ← NUEVO
-		combat_system.punch()
-		_play_animation("punch_02")
-		# Esperar a que termine la animación
-		await get_tree().create_timer(0.5).timeout
-		is_attacking = false
+		punch_cooldown = max(punch_cooldown - delta, 0.0)
+		if punch_cooldown <= 0:
+			is_attacking = true
+			combat_system.punch()
+			_play_animation("punch_02")
+			punch_cooldown = 0.8  # 0.8 segundos de cooldown
+			# Esperar a que termine la animación
+			await get_tree().create_timer(0.5).timeout
+			is_attacking = false
 	
 	if Input.is_action_just_pressed("attack_beer"):
-	# Verificar si tiene cerveza y no está en cooldown
-		if beer_ammo > 0 and combat_system.beer_cooldown <= 0:
+		beer_cooldown = max(beer_cooldown - delta, 0.0)
+		# Verificar si tiene cerveza y no está en cooldown
+		if beer_ammo > 0 and beer_cooldown <= 0:
 			is_attacking = true
 			combat_system.throw_beer()
 			beer_ammo -= 1
 			emit_signal("beer_ammo_changed", beer_ammo)
 			_play_animation("throw")
+			beer_cooldown = 1.2  # 1.2 segundos de cooldown
 			# Esperar a que termine la animación
 			await get_tree().create_timer(0.8).timeout
 			is_attacking = false
 
 #Reproducir animación
 func _play_animation(anim_name: String) -> void:
-	"""Reproduce una animación sin interrumpir ataques"""
-	if animation_player and not is_attacking:
+	"""Reproduce una animación"""
+	if animation_player:
 		if animation_player.current_animation != anim_name:
 			animation_player.play(anim_name)
 
@@ -101,8 +108,8 @@ func _rotate_model(direction: Vector3) -> void:
 	if model == null or direction.length() < 0.1:
 		return
 	
-	# Calcular ángulo: atan2(x, -z) para que mire correctamente
-	var angle = atan2(direction.x, -direction.z)
+	# Calcular ángulo
+	var angle = atan2(direction.x, direction.z)
 	model.rotation.y = angle
 
 func take_damage(damage: int) -> void:
