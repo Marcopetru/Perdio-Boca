@@ -1,21 +1,23 @@
 # scripts/managers/music_manager.gd
 extends Node
 
-# Referencia al AudioStreamPlayer
-@onready var music_player: AudioStreamPlayer = $AudioStreamPlayer
-
-# Variables de control
+var music_player: AudioStreamPlayer
 var current_music: String = ""
-var is_paused: bool = false
 
 func _ready() -> void:
-	# Hacer que sea accesible globalmente
-	name = "MusicManager"
-	add_to_group("managers")
+	# Obtener el AudioStreamPlayer
+	music_player = get_node("AudioStreamPlayer")
+	
+	if music_player == null:
+		return
+	
+	print("✅ MusicManager inicializado correctamente")
 
-# Función para cambiar música
 func play_music(music_path: String, loop: bool = true) -> void:
-	"""Reproduce una pista de música"""
+	"""Reproduce una pista de música con loop"""
+	
+	if music_player == null:
+		return
 	
 	# Si ya está tocando la misma música, no reiniciar
 	if current_music == music_path and music_player.playing:
@@ -25,33 +27,19 @@ func play_music(music_path: String, loop: bool = true) -> void:
 	
 	var audio_stream = load(music_path)
 	
-	
-	music_player.stream = audio_stream
+	if audio_stream == null:
+		return
 	
 	# Configurar loop
-	if loop:
+	if loop and audio_stream is AudioStreamWAV:
 		audio_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-	else:
-		audio_stream.loop_mode = AudioStreamWAV.LOOP_DISABLED
 	
+	music_player.stream = audio_stream
 	music_player.play()
 	
 
-# Función para pausar/reanudar música
-func toggle_pause() -> void:
-	"""Pausa o reanuda la música"""
-	if music_player.playing:
-		music_player.stream_paused = true
-		is_paused = true
-		
-	else:
-		music_player.stream_paused = false
-		is_paused = false
-		
-
-# Función para detener música
 func stop_music() -> void:
 	"""Detiene la música"""
-	music_player.stop()
-	current_music = ""
-	
+	if music_player:
+		music_player.stop()
+		current_music = ""
