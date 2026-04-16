@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cupvcjws7hyhi"]
+
+[ext_resource type="PackedScene" uid="uid://dvrpotdfvo1no" path="res://assets/3D props/ParedcitaHormigon_02.glb" id="1_cfi6v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kp73c"]
+size = Vector3(0.4348755, 1, 2.6254349)
+
+[node name="ParedcitaHormigon_02" type="StaticBody3D" unique_id=1906678985]
+
+[node name="ParedcitaHormigon_02" parent="." unique_id=795791526 instance=ExtResource("1_cfi6v")]
+transform = Transform3D(0.8279233, 0, 0.5608413, 0, 1, 0, -0.5608413, 0, 0.8279233, 0, 0, -0.052085698)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=716147756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0014196262, 0, -0.06404771)
+shape = SubResource("BoxShape3D_kp73c")
