@@ -109,8 +109,8 @@ func _rotate_model(direction: Vector3) -> void:
 	if model == null or direction.length() < 0.1:
 		return
 	
-	# Calcular ángulo base
-	var angle = atan2(direction.x, -direction.z)
+	# Calcular ángulo: invertir X para que coincida con las animaciones
+	var angle = atan2(-direction.x, -direction.z)
 	
 	# Sumar 180° porque el modelo mira hacia atrás por defecto
 	model.rotation.y = angle + PI
