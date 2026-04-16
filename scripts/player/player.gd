@@ -61,20 +61,30 @@ func _physics_process(delta: float) -> void:
 	if input_vector.length() > 0.1:
 		last_direction = input_vector
 		_rotate_model(input_vector)
-		_play_animation("walk")  # ← NUEVO: Caminar si hay input
+		if not is_attacking:  # ← NUEVO: Solo caminar si NO está atacando
+			_play_animation("walk")
 	else:
-		_play_animation("idle")  # ← NUEVO: Idle si no hay input
+		if not is_attacking:  # ← NUEVO: Solo idle si NO está atacando
+			_play_animation("idle")
 	
 	# Ataques
 	if Input.is_action_just_pressed("attack_punch"):
+		is_attacking = true  # ← NUEVO
 		combat_system.punch()
-		_play_animation("punch_02")  # ← NUEVO: Animar puño
+		_play_animation("punch_02")
+		# Esperar a que termine la animación
+		await get_tree().create_timer(0.5).timeout
+		is_attacking = false
 	
 	if Input.is_action_just_pressed("attack_beer") and beer_ammo > 0:
+		is_attacking = true  # ← NUEVO
 		combat_system.throw_beer()
 		beer_ammo -= 1
 		emit_signal("beer_ammo_changed", beer_ammo)
-		_play_animation("throw")  # ← NUEVO: Animar lanzar
+		_play_animation("throw")
+		# Esperar a que termine la animación
+		await get_tree().create_timer(0.8).timeout
+		is_attacking = false
 
 #Reproducir animación
 func _play_animation(anim_name: String) -> void:
@@ -89,7 +99,15 @@ func _rotate_model(direction: Vector3) -> void:
 	if model == null or direction.length() < 0.1:
 		return
 	
-	var angle = atan2(direction.x, direction.z)
+	# Calcular ángulo: atan2(x, -z) para que mire correctamente
+	var angle = atan2(direction.x, -direction.z)
+	model.rotation.y = anglefunc _rotate_model(direction: Vector3) -> void:
+	"""Rota el modelo hacia la dirección de movimiento"""
+	if model == null or direction.length() < 0.1:
+		return
+	
+	# Calcular ángulo: atan2(x, -z) para que mire correctamente
+	var angle = atan2(direction.x, -direction.z)
 	model.rotation.y = angle
 
 func take_damage(damage: int) -> void:
