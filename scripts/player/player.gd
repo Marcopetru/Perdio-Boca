@@ -111,11 +111,12 @@ func _rotate_model(direction: Vector3) -> void:
 	if model == null or direction.length() < 0.1:
 		return
 	
-	# Calcular ángulo: el modelo mira hacia -Z por defecto
-	# Ajustamos para que coincida con la dirección
-	var angle = atan2(direction.x, direction.z)
-	model.rotation.y = angle
-
+	# Calcular ángulo base
+	var angle = atan2(direction.x, -direction.z)
+	
+	# Sumar 180° porque el modelo mira hacia atrás por defecto
+	model.rotation.y = angle + PI
+	
 func take_damage(damage: int) -> void:
 	"""Recibe daño"""
 	
