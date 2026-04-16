@@ -96,14 +96,17 @@ func _rotate_model(direction: Vector3) -> void:
 	model.rotation.y = angle + PI
 
 func attack() -> void:
-	"""Ataque del enemigo con animación y cooldown mejorado"""
-	is_attacking = true  #Marca que está atacando
+	"""Ataque del enemigo con animación, sonido y cooldown mejorado"""
+	is_attacking = true  # Marca que está atacando
 	attack_cooldown = Constants.ENEMY_ATTACK_COOLDOWN  # Establece cooldown
 	
 	if player:
 		# Reproducir animación de ataque
-		if animation_player:  # ← NUEVO
+		if animation_player:
 			animation_player.play("punch_01")
+		
+		# ← NUEVO: Reproducir sonido de golpe del policía
+		_play_sound("res://assets/audio/sfx/Golpe 2.wav")
 		
 		# Aplicar daño al jugador
 		player.take_damage(Constants.ENEMY_DAMAGE)
@@ -112,12 +115,12 @@ func attack() -> void:
 		var direction = (player.global_position - global_position).normalized()
 		player.take_knockback(direction * 3.0)
 	
-	#Esperar a que termine la animación de ataque
+	# Esperar a que termine la animación de ataque
 	if animation_player:
 		# Esperar a que termine la animación (ajusta el tiempo según tu animación)
 		await get_tree().create_timer(0.6).timeout
 	
-	is_attacking = false  #Ya terminó de atacar
+	is_attacking = false  # Ya terminó de atacar
 
 func take_damage(damage: int) -> void:
 	current_health -= damage
@@ -167,6 +170,17 @@ func _get_all_mesh_instances(node: Node) -> Array:
 		instances += _get_all_mesh_instances(child)
 	
 	return instances
+
+#Reproducir sonido
+func _play_sound(sound_path: String) -> void:
+	"""Reproduce un sonido de efecto"""
+	
+	var sfx_player = get_node_or_null("SFXPlayer")
+	
+	var audio_stream = load(sound_path)
+	
+	sfx_player.stream = audio_stream
+	sfx_player.play()
 
 func die() -> void:
 	is_alive = false

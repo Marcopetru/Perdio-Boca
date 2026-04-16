@@ -12,11 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://b600j5khgljb4" path="res://assets/3D props/cordon_01.tscn" id="9_qxy0u"]
 [ext_resource type="PackedScene" uid="uid://h5bcipoicol5" path="res://assets/3D props/vereda.tscn" id="11_excbq"]
 [ext_resource type="PackedScene" uid="uid://bergeqacnpu11" path="res://assets/3D props/Edificio_01.tscn" id="12_iav0o"]
-[ext_resource type="PackedScene" uid="uid://c67yp5hutd1ow" path="res://assets/3D props/edificio_02.tscn" id="13_dnkej"]
-[ext_resource type="PackedScene" uid="uid://bf2wru8fmdcoj" path="res://assets/3D props/TachoBasura.tscn" id="14_mm8aj"]
-[ext_resource type="PackedScene" uid="uid://3smxeqjixc7m" path="res://assets/3D props/pared_con_reja.tscn" id="14_wtwp4"]
-[ext_resource type="PackedScene" uid="uid://bc2t8xvhi4cql" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
-[ext_resource type="PackedScene" uid="uid://nygyu8wbwpwj" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
+[ext_resource type="PackedScene" path="res://assets/3D props/edificio_02.tscn" id="13_dnkej"]
+[ext_resource type="PackedScene" path="res://assets/3D props/TachoBasura.tscn" id="14_mm8aj"]
+[ext_resource type="PackedScene" path="res://assets/3D props/pared_con_reja.tscn" id="14_wtwp4"]
+[ext_resource type="PackedScene" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
+[ext_resource type="PackedScene" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 size = Vector3(100, 1, 30)

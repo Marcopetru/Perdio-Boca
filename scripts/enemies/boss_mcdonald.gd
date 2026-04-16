@@ -6,7 +6,7 @@ var player: Node3D = null
 
 # ============== VARIABLES ==============
 var current_health: int
-var max_health: int = 150
+var max_health: int = 300
 var is_alive: bool = true
 
 # Ataque
