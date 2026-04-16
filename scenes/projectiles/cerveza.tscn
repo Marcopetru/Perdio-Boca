@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bant46qnt4ctb"]
+
+[ext_resource type="PackedScene" uid="uid://bcl28ukejvxo7" path="res://assets/models/cerveza.glb" id="1_oq15o"]
+
+[node name="cerveza" unique_id=1368281437 instance=ExtResource("1_oq15o")]

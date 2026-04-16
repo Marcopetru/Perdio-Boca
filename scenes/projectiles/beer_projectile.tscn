@@ -1,21 +1,18 @@
 [gd_scene format=3 uid="uid://w6ivrv8hv8ct"]
 
 [ext_resource type="Script" uid="uid://dy30prms1pdma" path="res://scripts/projectiles/projectiles.gd" id="1_goxxe"]
+[ext_resource type="PackedScene" uid="uid://bcl28ukejvxo7" path="res://assets/models/cerveza.glb" id="2_8timu"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_446jf"]
-radius = 0.3
-height = 0.6
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_goxxe"]
-radius = 0.3
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8timu"]
 
 [node name="BeerProjectile" type="Area3D" unique_id=733578823]
 script = ExtResource("1_goxxe")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=329162680]
-mesh = SubResource("SphereMesh_446jf")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1783833611]
-shape = SubResource("SphereShape3D_goxxe")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56445146, 0)
+shape = SubResource("CylinderShape3D_8timu")
+
+[node name="cerveza" parent="." unique_id=1368281437 instance=ExtResource("2_8timu")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
