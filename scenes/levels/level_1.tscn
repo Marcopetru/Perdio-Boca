@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dryf7dmpm35ql" path="res://scenes/player/player.tscn" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://c53p6notioep2" path="res://scripts/camera/camera_controller.gd" id="1_6761a"]
+[ext_resource type="Script" uid="uid://dedo41evqh6qg" path="res://scripts/levels/level_1_manager.gd" id="1_mkypq"]
 [ext_resource type="Script" uid="uid://cdow1l6nanxc" path="res://scripts/managers/spawn_manager.gd" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cknwhvgdn6gyc" path="res://assets/3D props/BolsaBasura.tscn" id="3_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://c8o7r0ja4a414" path="res://scenes/ui/hud.tscn" id="3_sugp2"]
@@ -49,6 +50,7 @@ size = Vector3(100, 20, 5)
 size = Vector3(100, 20, 5)
 
 [node name="Level1" type="Node3D" unique_id=96312856]
+script = ExtResource("1_mkypq")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1087399605]
 transform = Transform3D(1, 0, 0, 0, 0.99990255, 0.01396218, 0, -0.01396218, 0.99990255, 0, 4.161748, 7.128612)
