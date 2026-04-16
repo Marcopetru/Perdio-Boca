@@ -132,22 +132,41 @@ func take_damage(damage: int) -> void:
 func _flash_red() -> void:
 	"""Hace que el enemigo parpadee en rojo al recibir daño"""
 	
-	var mesh_instance = get_node_or_null("MeshInstance3D")
+	if model == null:
+		return
 	
-	if mesh_instance == null:
+	# Obtener todos los meshes del modelo (como hace el jugador)
+	var mesh_instances = _get_all_mesh_instances(model)
+	
+	if mesh_instances.is_empty():
+		print("⚠️ No se encontraron MeshInstance3D en el enemigo")
 		return
 	
 	# Cambiar a rojo
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color.RED
-	mesh_instance.set_surface_override_material(0, material)
+	for mesh_inst in mesh_instances:
+		var red_material = StandardMaterial3D.new()
+		red_material.albedo_color = Color.RED
+		mesh_inst.material_override = red_material
 	
-	# Revertir después de 0.15 segundos
-	await get_tree().create_timer(0.15).timeout
+	# Revertir después de 0.2 segundos
+	await get_tree().create_timer(0.2).timeout
 	
-	material = StandardMaterial3D.new()
-	material.albedo_color = Color.WHITE
-	mesh_instance.set_surface_override_material(0, material)
+	# Restaurar material original
+	for mesh_inst in mesh_instances:
+		mesh_inst.material_override = null
+
+#Recupera la skin original despues de parpadear
+func _get_all_mesh_instances(node: Node) -> Array:
+	"""Obtiene todos los MeshInstance3D de un nodo y sus hijos"""
+	var instances = []
+	
+	if node is MeshInstance3D:
+		instances.append(node)
+	
+	for child in node.get_children():
+		instances += _get_all_mesh_instances(child)
+	
+	return instances
 
 func die() -> void:
 	is_alive = false

@@ -122,7 +122,7 @@ func _create_beer_projectile() -> void:
 	get_tree().get_root().add_child(projectile)
 	
 	# Configurar posición y dirección
-	var spawn_pos = player.global_position + Vector3(0, 0.5, 0)
+	var spawn_pos = player.global_position + Vector3(0, 1.5, 0)
 	# Usar basis.z en lugar de -basis.z para que vaya en la dirección correcta
 	var direction = player.global_transform.basis.z
 	
