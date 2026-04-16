@@ -123,11 +123,10 @@ func _create_beer_projectile() -> void:
 	
 	# Configurar posición y dirección
 	var spawn_pos = player.global_position + Vector3(0, 0.5, 0)
-	var direction = -player.global_transform.basis.z
+	# Usar basis.z en lugar de -basis.z para que vaya en la dirección correcta
+	var direction = player.global_transform.basis.z
 	
 	projectile.setup(spawn_pos, direction, 15.0)
-	
-	print("🍺 Proyectil de cerveza creado en: ", spawn_pos)
 
 func _animate_attack(attack_type: String) -> void:
 	"""Placeholder de animación - sin efecto visual por ahora"""
