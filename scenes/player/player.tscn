@@ -20,4 +20,4 @@ script = ExtResource("2_lvxji")
 script = ExtResource("3_p47bc")
 
 [node name="Anim bostero" parent="." unique_id=549629701 instance=ExtResource("4_lvxji")]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

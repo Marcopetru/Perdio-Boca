@@ -5,7 +5,7 @@ extends CharacterBody3D
 @onready var animation_player = $"Anim bostero/AnimationPlayer"
 @onready var combat_system = $CombatSystem
 @onready var movement_component = $Movement
-@onready var model = $"Anim bostero"  #Para rotar el modelo
+@onready var model = self #para rotar al modelo
 
 # ============== VARIABLES DE ESTADO ==============
 var current_health: int
@@ -67,11 +67,13 @@ func _physics_process(delta: float) -> void:
 		last_direction = input_vector
 		_rotate_model(input_vector)
 		# Cambiar a walk si NO está atacando
-		if not is_attacking:
+		if not is_attacking and animation_player.current_animation != "walk":
+			print("▶️ Cambiando a: walk")
 			_play_animation("walk")
 	else:
 		# Cambiar a idle si NO está atacando
-		if not is_attacking:
+		if not is_attacking and animation_player.current_animation != "idle":
+			print("▶️ Cambiando a: idle")
 			_play_animation("idle")
 	
 	# Ataques
@@ -80,21 +82,18 @@ func _physics_process(delta: float) -> void:
 			is_attacking = true
 			combat_system.punch()
 			_play_animation("punch_02")
-			punch_cooldown = 0.8  # Cooldown de 0.8 segundos
-			# Esperar a que termine la animación
+			punch_cooldown = 0.8
 			await get_tree().create_timer(0.5).timeout
 			is_attacking = false
 	
 	if Input.is_action_just_pressed("attack_beer"):
-		# Verificar si tiene cerveza y no está en cooldown
 		if beer_ammo > 0 and beer_cooldown <= 0:
 			is_attacking = true
 			combat_system.throw_beer()
 			beer_ammo -= 1
 			emit_signal("beer_ammo_changed", beer_ammo)
 			_play_animation("throw")
-			beer_cooldown = 1.2  # Cooldown de 1.2 segundos
-			# Esperar a que termine la animación
+			beer_cooldown = 1.2
 			await get_tree().create_timer(0.8).timeout
 			is_attacking = false
 
@@ -102,9 +101,7 @@ func _physics_process(delta: float) -> void:
 func _play_animation(anim_name: String) -> void:
 	"""Reproduce una animación"""
 	if animation_player:
-		# Si no está reproduciendo nada o es diferente, reproducer
-		if animation_player.current_animation != anim_name or not animation_player.is_playing():
-			animation_player.play(anim_name)
+		animation_player.play(anim_name)
 
 #Rotar modelo según dirección
 func _rotate_model(direction: Vector3) -> void:
