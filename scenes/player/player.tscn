@@ -5,13 +5,15 @@
 [ext_resource type="Script" uid="uid://psqnhysb0dmj" path="res://scripts/player/movement.gd" id="3_p47bc"]
 [ext_resource type="PackedScene" uid="uid://h250c832jdko" path="res://scenes/player/anim_bostero.tscn" id="4_lvxji"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0owmy"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lvxji"]
+height = 3.0
 
 [node name="Player" type="CharacterBody3D" unique_id=534241689]
 script = ExtResource("1_gmlin")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=930534617]
-shape = SubResource("BoxShape3D_0owmy")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=602785574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1797265, 0)
+shape = SubResource("CapsuleShape3D_lvxji")
 
 [node name="CombatSystem" type="Node3D" parent="." unique_id=1717590289]
 script = ExtResource("2_lvxji")

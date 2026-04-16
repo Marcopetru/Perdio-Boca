@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://jvl73js87ykf"]
 
 [ext_resource type="Script" uid="uid://dbqndudde5did" path="res://scripts/enemies/enemy_base.gd" id="1_6r12v"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_6r12v"]
+[ext_resource type="PackedScene" uid="uid://c1maxeootrxdp" path="res://scenes/enemies/animaciones_policia_all.tscn" id="2_gfoao"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gfoao"]
 
 [node name="PoliceOfficer" type="CharacterBody3D" unique_id=537445479]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_6r12v")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=527186605]
-mesh = SubResource("CapsuleMesh_6r12v")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1975740679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7488837, 0)
 shape = SubResource("CapsuleShape3D_gfoao")
+
+[node name="Animaciones Policia all" parent="." unique_id=935533883 instance=ExtResource("2_gfoao")]

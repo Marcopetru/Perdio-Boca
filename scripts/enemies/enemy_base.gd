@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 # ============== REFERENCIAS ==============
 var player: Node3D = null
-@onready var animation_player = $"AnimationPlayer"  # para las animaciones
+@onready var animation_player = $"Animaciones Policia all/AnimationPlayer"  # para las animaciones
 @onready var model = self  # para rotar el modelo
 
 # ============== VARIABLES ==============
@@ -103,7 +103,7 @@ func attack() -> void:
 	if player:
 		# Reproducir animación de ataque
 		if animation_player:  # ← NUEVO
-			animation_player.play("attack")
+			animation_player.play("punch_01")
 		
 		# Aplicar daño al jugador
 		player.take_damage(Constants.ENEMY_DAMAGE)
