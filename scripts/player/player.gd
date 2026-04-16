@@ -45,7 +45,11 @@ func _physics_process(delta: float) -> void:
 	if not is_alive:
 		return
 	
-	#Procesar knockback
+	# Decrementar cooldowns CADA FRAME
+	punch_cooldown = max(punch_cooldown - delta, 0.0)
+	beer_cooldown = max(beer_cooldown - delta, 0.0)
+	
+	# Procesar knockback
 	knockback_duration = max(knockback_duration - delta, 0.0)
 	
 	var input_vector = get_input()
@@ -54,35 +58,32 @@ func _physics_process(delta: float) -> void:
 	if knockback_duration > 0:
 		velocity.x = knockback_velocity.x
 		velocity.z = knockback_velocity.z
-		# No recibe input mientras está siendo empujado
 	else:
 		# Movimiento normal
 		movement_component.process(delta, input_vector)
 	
-	#Rotar modelo según dirección
+	# Rotar modelo según dirección
 	if input_vector.length() > 0.1:
 		last_direction = input_vector
 		_rotate_model(input_vector)
-		if not is_attacking:  # ← NUEVO: Solo caminar si NO está atacando
+		if not is_attacking:
 			_play_animation("walk")
 	else:
-		if not is_attacking:  # ← NUEVO: Solo idle si NO está atacando
+		if not is_attacking:
 			_play_animation("idle")
 	
 	# Ataques
 	if Input.is_action_just_pressed("attack_punch"):
-		punch_cooldown = max(punch_cooldown - delta, 0.0)
 		if punch_cooldown <= 0:
 			is_attacking = true
 			combat_system.punch()
 			_play_animation("punch_02")
-			punch_cooldown = 0.8  # 0.8 segundos de cooldown
+			punch_cooldown = 0.8  # Cooldown de 0.8 segundos
 			# Esperar a que termine la animación
 			await get_tree().create_timer(0.5).timeout
 			is_attacking = false
 	
 	if Input.is_action_just_pressed("attack_beer"):
-		beer_cooldown = max(beer_cooldown - delta, 0.0)
 		# Verificar si tiene cerveza y no está en cooldown
 		if beer_ammo > 0 and beer_cooldown <= 0:
 			is_attacking = true
@@ -90,7 +91,7 @@ func _physics_process(delta: float) -> void:
 			beer_ammo -= 1
 			emit_signal("beer_ammo_changed", beer_ammo)
 			_play_animation("throw")
-			beer_cooldown = 1.2  # 1.2 segundos de cooldown
+			beer_cooldown = 1.2  # Cooldown de 1.2 segundos
 			# Esperar a que termine la animación
 			await get_tree().create_timer(0.8).timeout
 			is_attacking = false
@@ -108,7 +109,7 @@ func _rotate_model(direction: Vector3) -> void:
 	if model == null or direction.length() < 0.1:
 		return
 	
-	# Calcular ángulo
+	# Calcular ángulo correcto
 	var angle = atan2(direction.x, direction.z)
 	model.rotation.y = angle
 
@@ -120,6 +121,9 @@ func take_damage(damage: int) -> void:
 	
 	print("💢 Jugador recibe daño: ", damage, " | Vida: ", current_health)
 	
+	# Reproducir animación de daño
+	_play_animation("Damaged")
+	
 	# Parpadeo rojo al recibir daño
 	_flash_red()
 	
@@ -130,22 +134,37 @@ func take_damage(damage: int) -> void:
 func _flash_red() -> void:
 	"""Hace que el jugador parpadee en rojo al recibir daño"""
 	
-	var mesh_instance = get_node_or_null("MeshInstance3D")
-	
-	if mesh_instance == null:
+	# Cambiar a rojo el modelo
+	if model == null:
 		return
 	
-	# Cambiar a rojo
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color.RED
-	mesh_instance.set_surface_override_material(0, material)
+	# Obtener todos los meshes del modelo
+	var mesh_instances = _get_all_mesh_instances(model)
+	
+	for mesh_inst in mesh_instances:
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color.RED
+		mesh_inst.set_surface_override_material(0, material)
 	
 	# Revertir después de 0.15 segundos
 	await get_tree().create_timer(0.15).timeout
 	
-	material = StandardMaterial3D.new()
-	material.albedo_color = Color.WHITE
-	mesh_instance.set_surface_override_material(0, material)
+	for mesh_inst in mesh_instances:
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color.WHITE
+		mesh_inst.set_surface_override_material(0, material)
+
+func _get_all_mesh_instances(node: Node) -> Array:
+	"""Obtiene todos los MeshInstance3D de un nodo y sus hijos"""
+	var instances = []
+	
+	if node is MeshInstance3D:
+		instances.append(node)
+	
+	for child in node.get_children():
+		instances += _get_all_mesh_instances(child)
+	
+	return instances
 
 #Recibir knockback
 func take_knockback(knockback_vector: Vector3) -> void:
