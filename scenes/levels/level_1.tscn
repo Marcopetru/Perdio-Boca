@@ -25,6 +25,17 @@
 [ext_resource type="PackedScene" uid="uid://cbwur0cy2yp6n" path="res://scenes/levels/colectivo.tscn" id="21_mkypq"]
 [ext_resource type="AudioStream" uid="uid://cn2eawn1w0qvf" path="res://assets/audio/music/LEVEL 1.wav" id="23_7h2jl"]
 
+[sub_resource type="Environment" id="Environment_mqh5v"]
+tonemap_mode = 3
+tonemap_exposure = 1.09
+tonemap_agx_white = 24.14
+fog_enabled = true
+fog_mode = 1
+fog_light_energy = 0.31
+fog_density = 1.0
+fog_height_density = 0.2771
+volumetric_fog_density = 0.0
+
 [sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 size = Vector3(100, 1, 30)
 
@@ -58,6 +69,9 @@ size = Vector3(100, 20, 5)
 transform = Transform3D(1, 0, 0, 0, 0.99990255, 0.01396218, 0, -0.01396218, 0.99990255, 0, 4.161748, 7.128612)
 keep_aspect = 0
 script = ExtResource("1_6761a")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera3D" unique_id=1568620183]
+environment = SubResource("Environment_mqh5v")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1753662341]
 transform = Transform3D(0.723781, 0.39721805, -0.5642332, 0.3066412, 0.54736495, 0.77869296, 0.6181524, -0.73662025, 0.2743688, 0, 39.67289, 0)
