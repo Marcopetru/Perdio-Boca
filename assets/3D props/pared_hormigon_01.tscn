@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dvrcrc2ykqdo8"]
+
+[ext_resource type="PackedScene" uid="uid://c0cqfkugsyx8m" path="res://assets/3D props/ParedHormigon_01.glb" id="1_gckm2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y2rkt"]
+size = Vector3(0.95306396, 2.0456543, 0.42260742)
+
+[node name="ParedHormigon_01" type="StaticBody3D" unique_id=1858475075]
+
+[node name="ParedHormigon_01" parent="." unique_id=712327242 instance=ExtResource("1_gckm2")]
+transform = Transform3D(0.93610865, 0, 0.35171095, 0, 1, 0, -0.35171095, 0, 0.93610865, 0, 0.5704895, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1058793146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0049743652, 0.52282715, 0.0008544922)
+shape = SubResource("BoxShape3D_y2rkt")

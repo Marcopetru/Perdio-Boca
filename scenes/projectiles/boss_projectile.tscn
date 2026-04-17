@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://be8mld5w24jdh"]
 
 [ext_resource type="Script" uid="uid://dglryhag4ls43" path="res://scripts/projectiles/boss_projectile.gd" id="1_3sspm"]
+[ext_resource type="PackedScene" uid="uid://cuh1i4cp8q2hg" path="res://scenes/projectiles/Burger.glb" id="2_k5bii"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_3gj58"]
 radius = 0.15
@@ -15,7 +16,11 @@ radius = 0.2
 [node name="BossProjectile" type="Area3D" unique_id=1980962261]
 script = ExtResource("1_3sspm")
 
+[node name="Burger" parent="." unique_id=775151926 instance=ExtResource("2_k5bii")]
+transform = Transform3D(0.16, 0, 0, 0, 0.16, 0, 0, 0, 0.16, 0, -0.1169008, 0)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=767815723]
+visible = false
 mesh = SubResource("SphereMesh_3gj58")
 surface_material_override/0 = SubResource("StandardMaterial3D_3sspm")
 

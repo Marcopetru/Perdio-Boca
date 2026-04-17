@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://x4yklh6fk87d"]
 
 [ext_resource type="Script" uid="uid://by4fyqbcwvmnj" path="res://scripts/enemies/boss_mcdonald.gd" id="1_42whh"]
+[ext_resource type="PackedScene" uid="uid://8ccj6y02m3ba" path="res://scenes/enemies/McDonalds.glb" id="2_2yd7b"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_feqpd"]
 size = Vector3(4, 4, 4)
@@ -9,14 +10,19 @@ size = Vector3(4, 4, 4)
 albedo_color = Color(1, 0.27058825, 0.101960786, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u5yc1"]
-size = Vector3(4, 4, 4)
+size = Vector3(4.07666, 4, 2.9677734)
 
 [node name="BossMcDonald" type="CharacterBody3D" unique_id=1750455572]
 script = ExtResource("1_42whh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1747989188]
+visible = false
 mesh = SubResource("BoxMesh_feqpd")
 surface_material_override/0 = SubResource("StandardMaterial3D_r62w3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=809264773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038330078, 0, -0.027832031)
 shape = SubResource("BoxShape3D_u5yc1")
+
+[node name="McDonalds" parent="." unique_id=2092541378 instance=ExtResource("2_2yd7b")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -2.020995, 0)

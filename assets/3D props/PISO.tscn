@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://eqggdy7j36ur"]
+
+[ext_resource type="PackedScene" uid="uid://dapcuf5c653t2" path="res://assets/3D props/Piso_01.glb" id="1_62157"]
+
+[node name="StaticBody3D" type="StaticBody3D" unique_id=664356376]
+
+[node name="Piso_01" parent="." unique_id=755139823 instance=ExtResource("1_62157")]
