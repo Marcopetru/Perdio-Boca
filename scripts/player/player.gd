@@ -101,12 +101,19 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("attack_beer"):
 		if beer_ammo > 0 and beer_cooldown <= 0:
 			is_attacking = true
-			combat_system.throw_beer()
+			#No lanzar inmediatamente
+			_play_animation("throw")
 			beer_ammo -= 1
 			emit_signal("beer_ammo_changed", beer_ammo)
-			_play_animation("throw")
 			beer_cooldown = 1.2
-			await get_tree().create_timer(0.8).timeout
+			
+			#Esperar a frame clave de la animación (0.5s)
+			await get_tree().create_timer(0.5).timeout
+			
+			#AHORA sí lanzar el proyectil
+			combat_system.throw_beer()
+			
+			await get_tree().create_timer(0.7).timeout  # Resto de la animación
 			is_attacking = false
 
 #Reproducir animación
