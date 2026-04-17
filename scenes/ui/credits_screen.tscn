@@ -36,7 +36,7 @@ theme_override_colors/scroll_hint_horizontal_color = Color(0.0627451, 0.24705882
 
 [node name="CreditsContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=792442763]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -161,7 +161,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
 theme_override_fonts/font = ExtResource("2_h6ve6")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 text = "Agrademos al Gobierno de la Ciudad Autónoma de Buenos Aires"
 horizontal_alignment = 1
 
@@ -176,6 +176,10 @@ theme_override_fonts/font = ExtResource("2_h6ve6")
 theme_override_font_sizes/font_size = 130
 text = "Gracias por Jugar"
 horizontal_alignment = 1
+
+[node name="Control8" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=535812281]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1526534266]
 stream = ExtResource("3_h6ve6")
