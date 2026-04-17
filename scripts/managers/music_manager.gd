@@ -55,9 +55,12 @@ func play_music(music_path: String, loop: bool = true) -> void:
 	
 	# Reproducir
 	music_player.stream = audio_stream
-	music_player.play()
 	
-	print("🎵 Reproduciendo música: ", music_path)
+	#Configurar volumen y asegurarse que no esté muted
+	music_player.volume_db = 0.0  # Volumen normal
+	music_player.bus = "Master"   # Enviar al bus Master
+	
+	music_player.play()
 
 func stop_music() -> void:
 	"""Detiene la música"""
