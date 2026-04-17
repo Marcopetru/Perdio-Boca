@@ -5,4 +5,4 @@
 [node name="MusicManager" type="Node" unique_id=1323685861]
 script = ExtResource("1_fp10t")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="." unique_id=724117032]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=724117032]
