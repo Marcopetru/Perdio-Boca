@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bbkgcsgh6l21t" path="res://scripts/ui/main_menu.gd" id="1_1g8jr"]
 [ext_resource type="Texture2D" uid="uid://c5vadgt0pb064" path="res://assets/models/fondo_menu.png" id="2_m1kxf"]
 [ext_resource type="FontFile" uid="uid://c7md4rdl552ja" path="res://assets/models/MeaCulpa-Regular.ttf" id="3_x2yvf"]
+[ext_resource type="AudioStream" uid="uid://hhg6g847rlpa" path="res://assets/audio/music/MENU.wav" id="4_m1kxf"]
 
 [node name="Control" type="Control" unique_id=1372574716]
 layout_mode = 3
@@ -63,3 +64,7 @@ theme_override_colors/font_color = Color(0.0627451, 0.24705882, 0.4745098, 1)
 theme_override_fonts/font = ExtResource("3_x2yvf")
 theme_override_font_sizes/font_size = 150
 text = "Salir"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1951986975]
+stream = ExtResource("4_m1kxf")
+autoplay = true
