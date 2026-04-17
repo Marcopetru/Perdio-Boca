@@ -15,16 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://cxp3mxk63osip" path="res://scenes/ui/pause_menu.tscn" id="13_rpjqd"]
 
 [sub_resource type="GDScript" id="GDScript_2mvti"]
-script/source = "# scripts/levels/level_2_manager.gd
-extends Node
-
-func _ready() -> void:
-	
-	# Reproducir música
-	if MusicManager:
-		MusicManager.play_music(\"res://assets/audio/music/LEVEL 2.wav\", true)
-	return
-"
 
 [sub_resource type="Environment" id="Environment_7gxiw"]
 background_energy_multiplier = 0.66
