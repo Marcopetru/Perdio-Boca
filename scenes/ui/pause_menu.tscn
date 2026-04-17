@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cxp3mxk63osip"]
 
 [ext_resource type="Script" uid="uid://d03at6t3p5s3i" path="res://scripts/ui/pause_manager.gd" id="1_6tw0m"]
+[ext_resource type="FontFile" uid="uid://c7md4rdl552ja" path="res://assets/models/MeaCulpa-Regular.ttf" id="2_0lmf7"]
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=506881974]
 script = ExtResource("1_6tw0m")
@@ -30,18 +31,21 @@ grow_vertical = 2
 [node name="PauseTitle" type="Label" parent="PausePanel/VBoxContainer" unique_id=631045121]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.68810844, 0.54693556, 0.078190185, 1)
-theme_override_font_sizes/font_size = 48
-text = "PAUSA"
+theme_override_fonts/font = ExtResource("2_0lmf7")
+theme_override_font_sizes/font_size = 80
+text = "Pausa"
 horizontal_alignment = 1
 
 [node name="ContinueButton" type="Button" parent="PausePanel/VBoxContainer" unique_id=1219094572]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
-theme_override_font_sizes/font_size = 32
-text = "CONTINUAR"
+theme_override_fonts/font = ExtResource("2_0lmf7")
+theme_override_font_sizes/font_size = 70
+text = "Continuar"
 
 [node name="MenuButton" type="Button" parent="PausePanel/VBoxContainer" unique_id=1524516066]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
-theme_override_font_sizes/font_size = 32
-text = "MENU PRICIPAL"
+theme_override_fonts/font = ExtResource("2_0lmf7")
+theme_override_font_sizes/font_size = 60
+text = "Menu Principal"

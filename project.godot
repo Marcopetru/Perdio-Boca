@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Perdió_Boca"
-run/main_scene="uid://dymwqxbuqah6m"
+run/main_scene="uid://bfn3eua1ilj0c"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [autoload]

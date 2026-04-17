@@ -57,4 +57,4 @@ func _on_menu_pressed() -> void:
 	"""Click en botón Menú Principal"""
 	
 	get_tree().paused = false  # Reanudar ANTES de cambiar escena
-	# get_tree().change_scene_to_file("res://scenes/menu/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
