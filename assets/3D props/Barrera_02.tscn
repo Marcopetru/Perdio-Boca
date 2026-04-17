@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b4sgv415o5ns"]
+
+[ext_resource type="PackedScene" uid="uid://rnrx381boo2n" path="res://assets/3D props/barrera_02.glb" id="1_fh81f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qnefi"]
+size = Vector3(1.2828369, 1.1257324, 0.62158203)
+
+[node name="StaticBody3D" type="StaticBody3D" unique_id=1072885200]
+
+[node name="barrera_02" parent="." unique_id=1680135797 instance=ExtResource("1_fh81f")]
+transform = Transform3D(0.79956937, 0, 0.6005738, 0, 1, 0, -0.6005738, 0, 0.79956937, 0, 0, -0.037276983)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2076534630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0115356445, 0.13269043, -0.046142578)
+shape = SubResource("BoxShape3D_qnefi")

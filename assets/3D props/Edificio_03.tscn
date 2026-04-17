@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dmx4gdnqs0pg5"]
+
+[ext_resource type="PackedScene" uid="uid://ci7xdt4ooa4hu" path="res://assets/3D props/edificio_03.glb" id="1_aax5s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vkb3j"]
+size = Vector3(0.5819092, 1.102417, 1.1450806)
+
+[node name="edificio_03" type="StaticBody3D" unique_id=1896986013]
+
+[node name="edificio_03" parent="." unique_id=1883308686 instance=ExtResource("1_aax5s")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=516332586]
+transform = Transform3D(28, 0, 0, 0, 28, 0, 0, 0, 28, -7.894104, 15.549631, -0.03161621)
+shape = SubResource("BoxShape3D_vkb3j")
