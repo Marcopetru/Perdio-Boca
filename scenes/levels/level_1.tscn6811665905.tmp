@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
 [ext_resource type="PackedScene" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
 [ext_resource type="PackedScene" uid="uid://cbwur0cy2yp6n" path="res://scenes/levels/colectivo.tscn" id="21_mkypq"]
-[ext_resource type="AudioStream" uid="uid://cn2eawn1w0qvf" path="res://assets/audio/music/LEVEL 1.wav" id="23_7h2jl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 size = Vector3(100, 1, 30)
@@ -859,7 +858,3 @@ transform = Transform3D(-0.013962381, 0, -1.9999515, 0, 2, 0, 1.9999515, 0, -0.0
 
 [node name="Colectivo" parent="." unique_id=26068673 instance=ExtResource("21_mkypq")]
 transform = Transform3D(-0.050438013, 0, -0.39680728, 0, 0.4, 0, 0.39680728, 0, -0.050438013, -52.050236, -0.38008785, -2.756918)
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=22185408]
-stream = ExtResource("23_7h2jl")
-autoplay = true

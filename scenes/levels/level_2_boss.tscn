@@ -1,11 +1,23 @@
 [gd_scene format=3 uid="uid://bfa0q3tcktt8b"]
 
-[ext_resource type="Script" uid="uid://btefgou8f0hbx" path="res://scripts/levels/level_2_manager.gd" id="1_7gxiw"]
 [ext_resource type="Script" uid="uid://c53p6notioep2" path="res://scripts/camera/camera_controller.gd" id="1_ywrn7"]
 [ext_resource type="PackedScene" uid="uid://dryf7dmpm35ql" path="res://scenes/player/player.tscn" id="2_ufhlq"]
 [ext_resource type="PackedScene" uid="uid://bsgcdpp4vwq4i" path="res://scenes/ui/hud_level2.tscn" id="3_7gxiw"]
 [ext_resource type="Script" uid="uid://dackgi7maqogx" path="res://scripts/managers/progress_manager_level2.gd" id="3_ufhlq"]
 [ext_resource type="PackedScene" uid="uid://x4yklh6fk87d" path="res://scenes/enemies/boss_mcdonald.tscn" id="4_2mvti"]
+[ext_resource type="AudioStream" uid="uid://okgn5cba3wp8" path="res://assets/audio/music/LEVEL 2.wav" id="6_7gxiw"]
+
+[sub_resource type="GDScript" id="GDScript_2mvti"]
+script/source = "# scripts/levels/level_2_manager.gd
+extends Node
+
+func _ready() -> void:
+	
+	# Reproducir música
+	if MusicManager:
+		MusicManager.play_music(\"res://assets/audio/music/LEVEL 2.wav\", true)
+	return
+"
 
 [sub_resource type="BoxMesh" id="BoxMesh_hs41y"]
 size = Vector3(20, 0.5, 20)
@@ -17,7 +29,7 @@ albedo_color = Color(0.3372549, 0.29803923, 0.27058825, 1)
 size = Vector3(20, 0.5, 20)
 
 [node name="Level2" type="Node3D" unique_id=1325907334]
-script = ExtResource("1_7gxiw")
+script = SubResource("GDScript_2mvti")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1384986654]
 transform = Transform3D(1, 0, 0, 0, 0.99990255, 0.01396218, 0, -0.01396218, 0.99990255, 0, 4.161748, 7.128612)
@@ -45,3 +57,7 @@ script = ExtResource("3_ufhlq")
 
 [node name="BossMcDonald" parent="." unique_id=1750455572 instance=ExtResource("4_2mvti")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1324012937]
+stream = ExtResource("6_7gxiw")
+autoplay = true

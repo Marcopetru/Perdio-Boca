@@ -17,7 +17,6 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 [autoload]
 
 Constants="*uid://dicxslgm3quvn"
-MusicManager="*uid://c65j61pm0mo0m"
 
 [input]
 
