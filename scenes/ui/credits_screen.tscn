@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://fhm8mf1x77y8" path="res://scripts/ui/credits_screen.gd" id="1_uwft3"]
 [ext_resource type="FontFile" uid="uid://c7md4rdl552ja" path="res://assets/models/MeaCulpa-Regular.ttf" id="2_h6ve6"]
+[ext_resource type="AudioStream" uid="uid://hhg6g847rlpa" path="res://assets/audio/music/MENU.wav" id="3_h6ve6"]
 
 [node name="CreditsScreen" type="Control" unique_id=1952262504]
 layout_mode = 3
@@ -12,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uwft3")
 
-[node name="BackGroundImage" type="TextureRect" parent="." unique_id=377105069]
+[node name="BackGroundImage" type="ColorRect" parent="." unique_id=1727208164]
 modulate = Color(0.0627451, 0.24705882, 0.4745098, 1)
 self_modulate = Color(0.0627451, 0.24705882, 0.4745098, 1)
 layout_mode = 1
@@ -21,8 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 1
-stretch_mode = 5
+color = Color(0.0627451, 0.24705882, 0.4745098, 1)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=983165093]
 layout_mode = 1
@@ -129,7 +129,7 @@ theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
 theme_override_fonts/font = ExtResource("2_h6ve6")
 theme_override_font_sizes/font_size = 30
 text = "Gastón Ceballos
-"
+Nicolas Monteverde"
 horizontal_alignment = 1
 
 [node name="Control5" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=1077904436]
@@ -160,7 +160,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
 theme_override_fonts/font = ExtResource("2_h6ve6")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 30
 text = "Agrademos al Gobierno de la Ciudad Autónoma de Buenos Aires"
 horizontal_alignment = 1
 
@@ -175,3 +175,7 @@ theme_override_fonts/font = ExtResource("2_h6ve6")
 theme_override_font_sizes/font_size = 130
 text = "Gracias por Jugar"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1526534266]
+stream = ExtResource("3_h6ve6")
+autoplay = true

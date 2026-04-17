@@ -25,7 +25,6 @@ func _ready() -> void:
 	player = get_tree().get_root().find_child("Player", true, false)
 	
 	if player == null:
-		print("❌ Boss: No encontré al jugador")
 		return
 	
 	# Delay antes de empezar a atacar
@@ -34,10 +33,9 @@ func _ready() -> void:
 	#Emitir signal al inicializarse
 	emit_signal("health_changed", current_health)
 	
-	print("✅ Boss McDonald's inicializado")
-	print("   Vida: %d | Ataque en: %.1f segundos" % [max_health, attack_cooldown])
 
 func _physics_process(delta: float) -> void:
+	#Si no está vivo, NO hacer nada
 	if not is_alive or player == null:
 		return
 	
@@ -54,8 +52,6 @@ func _physics_process(delta: float) -> void:
 
 func _attack() -> void:
 	"""Ataca spawnando proyectiles"""
-	
-	print("👹 Boss ataca! Lanzando %d proyectiles (Fase %d)" % [projectiles_per_attack, current_phase])
 	
 	# Lanzar múltiples proyectiles
 	for i in range(projectiles_per_attack):
@@ -90,8 +86,6 @@ func take_damage(damage: int) -> void:
 	
 	current_health -= damage
 	emit_signal("health_changed", current_health)
-	
-	print("💢 Boss recibe daño: %d | Vida: %d/%d" % [damage, current_health, max_health])
 	
 	#Parpadeo rojo
 	_flash_red()
@@ -129,24 +123,21 @@ func _update_phase() -> void:
 		current_phase = 1
 		attack_interval = 2.0
 		projectiles_per_attack = 5  # ← CAMBIO: 3 → 5
-		print("📊 Boss Fase 1 - 5 proyectiles")
 	
 	elif health_percent > 0.33 and current_phase != 2:
 		current_phase = 2
 		attack_interval = 1.5
 		projectiles_per_attack = 7  # ← CAMBIO: 4 → 7
-		print("📊 Boss Fase 2 - 7 proyectiles")
 	
 	elif health_percent <= 0.33 and current_phase != 3:
 		current_phase = 3
 		attack_interval = 1.0
 		projectiles_per_attack = 9  # ← CAMBIO: 5 → 9
-		print("📊 Boss Fase 3 - 9 proyectiles - ¡¡¡MÁXIMO!!!")
 
 func die() -> void:
 	"""El boss muere"""
 	
-	is_alive = false
+	is_alive = false  # ← IMPORTANTE: Primero desactivar para evitar más ataques
 	
 	# Esperar 2 segundos antes de ir a créditos
 	await get_tree().create_timer(2.0).timeout

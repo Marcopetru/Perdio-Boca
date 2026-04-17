@@ -81,7 +81,6 @@ func take_knockback(knockback_vector: Vector3) -> void:
 	"""Recibe un empuje"""
 	knockback_velocity = knockback_vector
 	knockback_duration = 0.15  # Duración del empuje en segundos
-	print("💨 Enemigo recibe knockback")
 
 #Rotar hacia la dirección
 func _rotate_model(direction: Vector3) -> void:
@@ -105,7 +104,7 @@ func attack() -> void:
 		if animation_player:
 			animation_player.play("punch_01")
 		
-		# ← NUEVO: Reproducir sonido de golpe del policía
+		#Reproducir sonido de golpe del policía
 		_play_sound("res://assets/audio/sfx/Golpe 2.wav")
 		
 		# Aplicar daño al jugador
@@ -142,7 +141,6 @@ func _flash_red() -> void:
 	var mesh_instances = _get_all_mesh_instances(model)
 	
 	if mesh_instances.is_empty():
-		print("⚠️ No se encontraron MeshInstance3D en el enemigo")
 		return
 	
 	# Cambiar a rojo

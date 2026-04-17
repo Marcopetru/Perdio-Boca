@@ -9,13 +9,9 @@ func _ready() -> void:
 	add_to_group("spawn_manager")
 	
 	progress_manager = get_tree().get_root().find_child("ProgressManager", true, false)
-	
-	print("✅ SpawnManager inicializado")
 
 func spawn_zone_enemies(zone_id: int, enemy_count: int, zone_x: float) -> void:
 	"""Spawnea enemigos en una zona específica"""
-	
-	print("🌊 SpawnManager: Zona %d - Spawnando %d enemigos en X=%.1f" % [zone_id, enemy_count, zone_x])
 	
 	for i in range(enemy_count):
 		# Delay entre spawns
@@ -36,8 +32,6 @@ func _spawn_single_enemy(zone_x: float, _zone_id: int) -> void:
 	
 	# Conectar muerte
 	enemy.died.connect(_on_enemy_died)
-	
-	print("  └─ Enemigo spawnado en (X=%.1f, Z=%.1f)" % [zone_x, spawn_z])
 
 func _on_enemy_died() -> void:
 	"""Se llama cuando un enemigo muere"""
@@ -51,7 +45,6 @@ func _on_enemy_died() -> void:
 	# Verificar si todos los enemigos fueron derrotados
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	
-	print("DEBUG: Enemigo muerto. Enemigos vivos: %d" % enemies.size())
 	for enemy in enemies:
 		print("  - Enemigo vivo: %s" % enemy.name)
 	

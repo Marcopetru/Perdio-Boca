@@ -12,12 +12,7 @@ func _ready() -> void:
 	target = get_tree().get_root().find_child("Player", true, false)
 	
 	if target == null:
-		print("❌ Cámara: No encontré al jugador")
 		return
-	
-	print("✅ Cámara inicializada (45° isométrica)")
-	print("  Posición inicial: %s" % self.global_position)
-	print("  Offset Y: %.1f | Offset Z: %.1f" % [offset_y, offset_z])
 
 func _process(delta: float) -> void:
 	if target == null:

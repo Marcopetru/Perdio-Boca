@@ -18,7 +18,6 @@ func _ready() -> void:
 	player = get_tree().get_root().find_child("Player", true, false)
 	
 	if player == null:
-		print("❌ ProgressManager Level 2: No encontré al jugador")
 		return
 	
 	# Conectar signal de muerte del jugador
@@ -28,14 +27,11 @@ func _ready() -> void:
 	boss = get_tree().get_root().find_child("Boss", true, false)
 	
 	if boss == null:
-		print("❌ ProgressManager Level 2: No encontré al Boss")
 		return
 	
 	# Conectar signal de muerte del Boss
 	boss.died.connect(_on_boss_died)
 	
-	print("✅ ProgressManager Level 2 inicializado")
-	print("   Jugador: %s | Boss: %s" % [player.name, boss.name])
 
 func _process(_delta: float) -> void:
 	if not level_active or player == null:
@@ -53,7 +49,6 @@ func _on_player_died() -> void:
 	
 	level_active = false
 	
-	print("💀 ¡DERROTA! Score: %d" % current_score)
 	
 	emit_signal("level_finished", false)
 	
@@ -75,8 +70,6 @@ func _on_boss_died() -> void:
 	current_score += 5000
 	emit_signal("score_changed", current_score)
 	
-	print("🎉 ¡VICTORIA! ¡Boss derrotado!")
-	print("   Score final: %d" % current_score)
 	
 	emit_signal("level_finished", true)
 	
@@ -86,8 +79,6 @@ func _on_boss_died() -> void:
 
 func _go_to_victory_screen() -> void:
 	"""Transición a pantalla de victoria"""
-	
-	print("🎯 Yendo a pantalla de victoria...")
 	
 	# Por ahora, recargar el nivel (después crearemos la pantalla de victoria)
 	# get_tree().change_scene_to_file("res://scenes/ui/victory_screen.tscn")

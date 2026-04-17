@@ -126,13 +126,10 @@ func on_enemy_killed() -> void:
 	
 	current_score += 10
 	emit_signal("score_changed", current_score)
-	
-	print("💀 Enemigos restantes: %d" % (zones[current_zone]["enemies"] - enemies_killed))
+
 
 func _go_to_boss() -> void:
 	"""Transición al boss"""
-	
-	print("🎯 ¡Todas las zonas despejadas! Yendo al boss...")
 	
 	current_score += 2000  # Bonus por completar el nivel
 	emit_signal("score_changed", current_score)
@@ -149,8 +146,6 @@ func _on_player_died() -> void:
 		return
 	
 	level_active = false
-	
-	print("💀 ¡DERROTA! Zona: %d | Score: %d" % [current_zone + 1, current_score])
 	
 	emit_signal("level_finished", false)
 	
