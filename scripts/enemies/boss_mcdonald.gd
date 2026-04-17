@@ -15,28 +15,27 @@ var attack_interval: float = 2.0  # Lanzar proyectiles cada 2 segundos
 var projectiles_per_attack: int = 3  # Lanzar 3 proyectiles por ataque
 var current_phase: int = 1  # Fase 1, 2 o 3 (aumenta dificultad)
 
-# ============== SIGNALS ==============
-signal health_changed(new_health)
-signal died
-
 func _ready() -> void:
 	add_to_group("boss")
 	current_health = max_health
 	player = get_tree().get_root().find_child("Player", true, false)
 	
 	if player == null:
+		print("❌ Boss: No encontré al jugador")
 		return
 	
 	# Delay antes de empezar a atacar
 	attack_cooldown = 2.0
 	
-	#Emitir signal al inicializarse
-	emit_signal("health_changed", current_health)
-	
+	print("✅ Boss McDonald's inicializado")
+	print("   Vida: %d | Ataque en: %.1f segundos" % [max_health, attack_cooldown])
 
 func _physics_process(delta: float) -> void:
-	#Si no está vivo, NO hacer nada
-	if not is_alive or player == null:
+	# ← CRÍTICO: Si no está vivo, DETENER TODO
+	if not is_alive:
+		return
+	
+	if player == null:
 		return
 	
 	# Actualizar cooldown de ataque
@@ -47,19 +46,38 @@ func _physics_process(delta: float) -> void:
 		_attack()
 		attack_cooldown = attack_interval
 	
-	# Cambiar fase según vida (opcional pero hace más interesante)
+	# Cambiar fase según vida
 	_update_phase()
 
 func _attack() -> void:
 	"""Ataca spawnando proyectiles"""
 	
+	# ← PROTECCIÓN: Verificar que sigue vivo
+	if not is_alive:
+		return
+	
+	print("👹 Boss ataca! Lanzando %d proyectiles (Fase %d)" % [projectiles_per_attack, current_phase])
+	
 	# Lanzar múltiples proyectiles
 	for i in range(projectiles_per_attack):
-		await get_tree().create_timer(0.2 * i).timeout  # Pequeño delay entre proyectiles
+		# ← PROTECCIÓN: Verificar antes de cada proyectil
+		if not is_alive:
+			break
+		
+		await get_tree().create_timer(0.2 * i).timeout
+		
+		# ← PROTECCIÓN: Verificar de nuevo antes de spawnear
+		if not is_alive:
+			break
+		
 		_spawn_projectile()
 
 func _spawn_projectile() -> void:
 	"""Spawnea UN proyectil que cae del cielo"""
+	
+	# ← PROTECCIÓN: Verificar que la escena sigue existiendo
+	if not is_alive or get_tree() == null:
+		return
 	
 	# Cargar escena del proyectil
 	var projectile_scene = load("res://scenes/projectiles/boss_projectile.tscn")
@@ -68,32 +86,32 @@ func _spawn_projectile() -> void:
 	# Agregar a la escena
 	get_tree().get_root().add_child(projectile)
 	
-	#El proyectil aparece arriba (en el cielo)
+	# El proyectil aparece arriba (en el cielo)
 	var spawn_pos = Vector3(0, 20, 0)  # Arriba del nivel, en el centro
 	
-	#Destino aleatorio DENTRO del floor (20x20) - SOLO X y Z
+	# Destino aleatorio DENTRO del floor (20x20) - SOLO X y Z
 	var target_x_z = Vector2(
 		randf_range(-10, 10),  # X dentro del floor
 		randf_range(-10, 10)   # Z dentro del floor
 	)
 	
-	#Pasar X,Z del destino (no Position3D)
+	# Pasar X,Z del destino
 	projectile.setup(spawn_pos, target_x_z, Constants.BEER_DAMAGE)
-	
 
 func take_damage(damage: int) -> void:
 	"""Recibe daño"""
 	
 	current_health -= damage
-	emit_signal("health_changed", current_health)
 	
-	#Parpadeo rojo
+	print("💢 Boss recibe daño: %d | Vida: %d/%d" % [damage, current_health, max_health])
+	
+	# Parpadeo rojo
 	_flash_red()
 	
 	if current_health <= 0:
 		die()
 
-#Parpadeo rojo al recibir daño
+# Parpadeo rojo al recibir daño
 func _flash_red() -> void:
 	"""Hace que el Boss parpadee en rojo al recibir daño"""
 	
@@ -122,25 +140,32 @@ func _update_phase() -> void:
 	if health_percent > 0.66 and current_phase != 1:
 		current_phase = 1
 		attack_interval = 2.0
-		projectiles_per_attack = 5  # ← CAMBIO: 3 → 5
+		projectiles_per_attack = 5
+		print("📊 Boss Fase 1 - 5 proyectiles")
 	
 	elif health_percent > 0.33 and current_phase != 2:
 		current_phase = 2
 		attack_interval = 1.5
-		projectiles_per_attack = 7  # ← CAMBIO: 4 → 7
+		projectiles_per_attack = 7
+		print("📊 Boss Fase 2 - 7 proyectiles")
 	
 	elif health_percent <= 0.33 and current_phase != 3:
 		current_phase = 3
 		attack_interval = 1.0
-		projectiles_per_attack = 9  # ← CAMBIO: 5 → 9
+		projectiles_per_attack = 9
+		print("📊 Boss Fase 3 - 9 proyectiles - ¡¡¡MÁXIMO!!!")
 
 func die() -> void:
 	"""El boss muere"""
 	
-	is_alive = false  # ← IMPORTANTE: Primero desactivar para evitar más ataques
+	# ← CRÍTICO: Desactivar INMEDIATAMENTE para evitar más ataques
+	is_alive = false
+	
+	print("💀 ¡BOSS DERROTADO!")
 	
 	# Esperar 2 segundos antes de ir a créditos
 	await get_tree().create_timer(2.0).timeout
 	
-	#IR A CRÉDITOS
+	# ← IR A CRÉDITOS
+	print("📺 Yendo a pantalla de créditos...")
 	get_tree().change_scene_to_file("res://scenes/ui/credits_screen.tscn")
