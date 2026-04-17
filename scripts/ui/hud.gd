@@ -56,6 +56,11 @@ func _on_enemy_killed() -> void:
 	
 	enemies_killed += 1
 	_update_debug_label()
+	
+	#Restaurar munición al matar enemigo
+	if player:
+		player.beer_ammo = Constants.PLAYER_BEER_AMMO
+		player.emit_signal("beer_ammo_changed", player.beer_ammo)
 
 func _on_zone_cleared(zone_id: int) -> void:
 	"""Se llama cuando despejaron la zona"""

@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://okgn5cba3wp8" path="res://assets/audio/music/LEVEL 2.wav" id="6_7gxiw"]
 [ext_resource type="PackedScene" uid="uid://b4sgv415o5ns" path="res://assets/3D props/Barrera_02.tscn" id="7_2mvti"]
 [ext_resource type="PackedScene" uid="uid://cknwhvgdn6gyc" path="res://assets/3D props/BolsaBasura.tscn" id="8_hs41y"]
-[ext_resource type="PackedScene" uid="uid://3smxeqjixc7m" path="res://assets/3D props/pared_con_reja.tscn" id="9_i88h5"]
+[ext_resource type="PackedScene" path="res://assets/3D props/pared_con_reja.tscn" id="9_i88h5"]
 
 [sub_resource type="GDScript" id="GDScript_2mvti"]
 script/source = "# scripts/levels/level_2_manager.gd
