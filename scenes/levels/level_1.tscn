@@ -16,11 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://cupvcjws7hyhi" path="res://assets/3D props/paredcita_hormigon_02.tscn" id="12_gmpev"]
 [ext_resource type="PackedScene" uid="uid://bergeqacnpu11" path="res://assets/3D props/Edificio_01.tscn" id="12_iav0o"]
 [ext_resource type="PackedScene" uid="uid://dmx4gdnqs0pg5" path="res://assets/3D props/Edificio_03.tscn" id="12_mqh5v"]
-[ext_resource type="PackedScene" uid="uid://c67yp5hutd1ow" path="res://assets/3D props/edificio_02.tscn" id="13_dnkej"]
-[ext_resource type="PackedScene" uid="uid://bf2wru8fmdcoj" path="res://assets/3D props/TachoBasura.tscn" id="14_mm8aj"]
-[ext_resource type="PackedScene" uid="uid://3smxeqjixc7m" path="res://assets/3D props/pared_con_reja.tscn" id="14_wtwp4"]
-[ext_resource type="PackedScene" uid="uid://bc2t8xvhi4cql" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
-[ext_resource type="PackedScene" uid="uid://nygyu8wbwpwj" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
+[ext_resource type="PackedScene" path="res://assets/3D props/edificio_02.tscn" id="13_dnkej"]
+[ext_resource type="PackedScene" path="res://assets/3D props/TachoBasura.tscn" id="14_mm8aj"]
+[ext_resource type="PackedScene" path="res://assets/3D props/pared_con_reja.tscn" id="14_wtwp4"]
+[ext_resource type="PackedScene" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
+[ext_resource type="PackedScene" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
 [ext_resource type="PackedScene" uid="uid://b4sgv415o5ns" path="res://assets/3D props/Barrera_02.tscn" id="18_7h2jl"]
 [ext_resource type="PackedScene" uid="uid://cbwur0cy2yp6n" path="res://scenes/levels/colectivo.tscn" id="21_mkypq"]
 [ext_resource type="AudioStream" uid="uid://cn2eawn1w0qvf" path="res://assets/audio/music/LEVEL 1.wav" id="23_7h2jl"]
@@ -925,9 +925,6 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 41.07354, 1.4012339, 13.35289
 
 [node name="ParedConReja18" parent="." unique_id=527030287 instance=ExtResource("14_wtwp4")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 46.33713, 1.4012339, 13.352896)
-
-[node name="StaticBody3D2" parent="." unique_id=1950164066 instance=ExtResource("14_mm8aj")]
-transform = Transform3D(0.043478683, 0, 1.49937, 0, 1.5, 0, -1.49937, 0, 0.043478683, 30.749714, -0.4797821, 6.4912033)
 
 [node name="Cono_01" parent="." unique_id=767162040 instance=ExtResource("16_iwr0g")]
 transform = Transform3D(1.605052, 0, -1.1932342, 0, 2, 0, 1.1932342, 0, 1.605052, -27.998087, 0, -5.940132)
