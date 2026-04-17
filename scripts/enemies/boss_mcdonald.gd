@@ -144,11 +144,12 @@ func _update_phase() -> void:
 		print("📊 Boss Fase 3 - 9 proyectiles - ¡¡¡MÁXIMO!!!")
 
 func die() -> void:
-	"""Muere"""
+	"""El boss muere"""
 	
 	is_alive = false
-	print("💀 ¡Boss McDonald's MUERE!")
-	emit_signal("health_changed", 0)
-	emit_signal("died")
 	
-	queue_free()
+	# Esperar 2 segundos antes de ir a créditos
+	await get_tree().create_timer(2.0).timeout
+	
+	#IR A CRÉDITOS
+	get_tree().change_scene_to_file("res://scenes/ui/credits_screen.tscn")
