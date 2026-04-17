@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0627451, 0.24705882, 0.4745098, 1)
+color = Color(0.0627451, 0.24705882, 0.4745098, 0.47058824)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PausePanel" unique_id=494817095]
 layout_mode = 1
@@ -29,15 +29,19 @@ grow_vertical = 2
 
 [node name="PauseTitle" type="Label" parent="PausePanel/VBoxContainer" unique_id=631045121]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.68810844, 0.54693556, 0.078190185, 1)
 theme_override_font_sizes/font_size = 48
 text = "PAUSA"
+horizontal_alignment = 1
 
 [node name="ContinueButton" type="Button" parent="PausePanel/VBoxContainer" unique_id=1219094572]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
 theme_override_font_sizes/font_size = 32
 text = "CONTINUAR"
 
 [node name="MenuButton" type="Button" parent="PausePanel/VBoxContainer" unique_id=1524516066]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
 theme_override_font_sizes/font_size = 32
 text = "MENU PRICIPAL"

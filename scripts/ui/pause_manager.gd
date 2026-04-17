@@ -16,6 +16,9 @@ func _ready() -> void:
 	
 	# Ocultar panel al inicio
 	pause_panel.visible = false
+	
+	# ← NUEVO: Configurar para que funcione con pausa
+	pause_panel.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta: float) -> void:
 	# Presionar ESC para pausar/reanudar
@@ -54,5 +57,4 @@ func _on_menu_pressed() -> void:
 	"""Click en botón Menú Principal"""
 	
 	get_tree().paused = false  # Reanudar ANTES de cambiar escena
-	# Aquí iremos al menú cuando lo creemos
 	# get_tree().change_scene_to_file("res://scenes/menu/main_menu.tscn")
