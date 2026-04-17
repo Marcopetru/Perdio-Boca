@@ -1,70 +1,50 @@
 # scripts/managers/music_manager.gd
 extends Node
 
-var music_player: AudioStreamPlayer
+var music_player: AudioStreamPlayer3D  # ← CAMBIO: Ahora es AudioStreamPlayer3D
 var current_music: String = ""
 
 func _ready() -> void:
-	print("🔍 MusicManager _ready() iniciado")
+	print("🎵 MusicManager _ready() iniciado")
 	
-	# Obtener el AudioStreamPlayer
-	music_player = get_node_or_null("AudioStreamPlayer")
+	# Obtener el AudioStreamPlayer3D
+	music_player = get_node_or_null("AudioStreamPlayer3D")
 	
 	if music_player == null:
-		print("❌ ERROR: AudioStreamPlayer no encontrado!")
-		print("🔍 Hijos disponibles:", get_child_count())
-		for child in get_children():
-			print("  - ", child.name, " (", child.get_class(), ")")
+		print("❌ ERROR: AudioStreamPlayer3D no encontrado!")
 		return
 	
-	print("✅ MusicManager inicializado - AudioStreamPlayer encontrado")
+	print("✅ AudioStreamPlayer3D encontrado")
 
 func play_music(music_path: String, loop: bool = true) -> void:
-	"""Reproduce una pista de música con loop"""
+	"""Reproduce una pista de música"""
 	
-	print("🔍 play_music() llamado con: ", music_path)
+	print("🎵 Reproduciendo: ", music_path)
 	
 	if music_player == null:
-		print("❌ ERROR: music_player es null en play_music()")
+		print("❌ music_player es NULL")
 		return
 	
-	# Si ya está tocando la misma música, no reiniciar
-	if current_music == music_path and music_player.playing:
-		print("ℹ️ Música ya reproduciendo: ", music_path)
-		return
-	
-	current_music = music_path
-	
-	print("📂 Cargando archivo: ", music_path)
 	var audio_stream = load(music_path)
-	
 	if audio_stream == null:
-		print("❌ ERROR: No se pudo cargar el archivo: ", music_path)
+		print("❌ No se pudo cargar: ", music_path)
 		return
 	
-	print("✅ Archivo cargado correctamente")
-	print("🔍 Tipo de stream: ", audio_stream.get_class())
+	# Parar música anterior
+	if music_player.playing:
+		music_player.stop()
 	
-	# Configurar loop
-	if loop:
-		if audio_stream is AudioStreamWAV:
-			audio_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-			print("✅ Loop configurado para WAVE")
-		else:
-			print("⚠️ Stream no es WAV, no se configura loop")
-	
-	# Reproducir
+	# Configurar y reproducir
 	music_player.stream = audio_stream
+	music_player.volume_db = 0.0
 	
-	#Configurar volumen y asegurarse que no esté muted
-	music_player.volume_db = 0.0  # Volumen normal
-	music_player.bus = "Master"   # Enviar al bus Master
+	if loop and audio_stream is AudioStreamWAV:
+		audio_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
 	
 	music_player.play()
+	print("✅ Música iniciada")
 
 func stop_music() -> void:
-	"""Detiene la música"""
 	if music_player:
 		music_player.stop()
 		current_music = ""
-		print("⏹️ Música detenida")

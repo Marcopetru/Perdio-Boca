@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byyjuj3erp48y" path="res://scripts/managers/music_manager.gd" id="1_fp10t"]
 
-[node name="MusicManager" type="Node" unique_id=1323685861]
+[node name="MusicManager" type="Node3D" unique_id=2140072709]
 script = ExtResource("1_fp10t")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=724117032]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1337212462]
