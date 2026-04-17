@@ -16,14 +16,15 @@
 [ext_resource type="PackedScene" uid="uid://cupvcjws7hyhi" path="res://assets/3D props/paredcita_hormigon_02.tscn" id="12_gmpev"]
 [ext_resource type="PackedScene" uid="uid://bergeqacnpu11" path="res://assets/3D props/Edificio_01.tscn" id="12_iav0o"]
 [ext_resource type="PackedScene" uid="uid://dmx4gdnqs0pg5" path="res://assets/3D props/Edificio_03.tscn" id="12_mqh5v"]
-[ext_resource type="PackedScene" uid="uid://c67yp5hutd1ow" path="res://assets/3D props/edificio_02.tscn" id="13_dnkej"]
-[ext_resource type="PackedScene" uid="uid://bf2wru8fmdcoj" path="res://assets/3D props/TachoBasura.tscn" id="14_mm8aj"]
-[ext_resource type="PackedScene" uid="uid://3smxeqjixc7m" path="res://assets/3D props/pared_con_reja.tscn" id="14_wtwp4"]
-[ext_resource type="PackedScene" uid="uid://bc2t8xvhi4cql" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
-[ext_resource type="PackedScene" uid="uid://nygyu8wbwpwj" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
+[ext_resource type="PackedScene" path="res://assets/3D props/edificio_02.tscn" id="13_dnkej"]
+[ext_resource type="PackedScene" path="res://assets/3D props/TachoBasura.tscn" id="14_mm8aj"]
+[ext_resource type="PackedScene" path="res://assets/3D props/pared_con_reja.tscn" id="14_wtwp4"]
+[ext_resource type="PackedScene" path="res://assets/3D props/cono_01.tscn" id="16_iwr0g"]
+[ext_resource type="PackedScene" path="res://assets/3D props/stop_signal.tscn" id="17_bahl2"]
 [ext_resource type="PackedScene" uid="uid://b4sgv415o5ns" path="res://assets/3D props/Barrera_02.tscn" id="18_7h2jl"]
 [ext_resource type="PackedScene" uid="uid://cbwur0cy2yp6n" path="res://scenes/levels/colectivo.tscn" id="21_mkypq"]
 [ext_resource type="AudioStream" uid="uid://cn2eawn1w0qvf" path="res://assets/audio/music/LEVEL 1.wav" id="23_7h2jl"]
+[ext_resource type="PackedScene" uid="uid://cxp3mxk63osip" path="res://scenes/ui/pause_menu.tscn" id="25_7o3do"]
 
 [sub_resource type="Environment" id="Environment_mqh5v"]
 tonemap_mode = 3
@@ -954,3 +955,5 @@ transform = Transform3D(-0.050438013, 0, -0.39680728, 0, 0.4, 0, 0.39680728, 0, 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=22185408]
 stream = ExtResource("23_7h2jl")
 autoplay = true
+
+[node name="CanvasLayer" parent="." unique_id=506881974 instance=ExtResource("25_7o3do")]
