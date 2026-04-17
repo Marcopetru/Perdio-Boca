@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://cbwur0cy2yp6n" path="res://scenes/levels/colectivo.tscn" id="21_mkypq"]
 [ext_resource type="AudioStream" uid="uid://cn2eawn1w0qvf" path="res://assets/audio/music/LEVEL 1.wav" id="23_7h2jl"]
 [ext_resource type="PackedScene" uid="uid://cxp3mxk63osip" path="res://scenes/ui/pause_menu.tscn" id="25_7o3do"]
+[ext_resource type="PackedScene" uid="uid://vu0vravx8s8a" path="res://scenes/ui/controls_overlay.tscn" id="26_o7j4k"]
 
 [sub_resource type="Environment" id="Environment_mqh5v"]
 tonemap_mode = 3
@@ -964,3 +965,5 @@ stream = ExtResource("23_7h2jl")
 autoplay = true
 
 [node name="CanvasLayer" parent="." unique_id=506881974 instance=ExtResource("25_7o3do")]
+
+[node name="CanvasLayer2" parent="." unique_id=1593847831 instance=ExtResource("26_o7j4k")]
