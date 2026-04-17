@@ -9,6 +9,9 @@ var current_health: int
 var max_health: int = 300
 var is_alive: bool = true
 
+# ============== SEÑALES ==============
+signal health_changed(new_health)
+
 # Ataque
 var attack_cooldown: float = 0.0
 var attack_interval: float = 2.0  # Lanzar proyectiles cada 2 segundos
@@ -102,6 +105,7 @@ func take_damage(damage: int) -> void:
 	"""Recibe daño"""
 	
 	current_health -= damage
+	emit_signal("health_changed", current_health)
 	
 	print("💢 Boss recibe daño: %d | Vida: %d/%d" % [damage, current_health, max_health])
 	

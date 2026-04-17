@@ -36,6 +36,7 @@ theme_override_colors/scroll_hint_horizontal_color = Color(0.0627451, 0.24705882
 
 [node name="CreditsContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=792442763]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 20
 alignment = 1
 
