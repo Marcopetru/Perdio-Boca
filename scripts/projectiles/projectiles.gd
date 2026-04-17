@@ -8,27 +8,33 @@ var knockback = Constants.BEER_KNOCKBACK
 var max_distance = Constants.BEER_RANGE
 var traveled_distance = 0.0
 
+#Rotación de la botella
+var rotation_speed = Vector3(8.0, 5.0, 10.0)  # Velocidad de rotación en cada eje
+
 var enemies_hit = []
 
 func _ready() -> void:
 	add_to_group("projectile")
-	
 
 func _physics_process(delta: float) -> void:
 	# Movimiento
 	position += velocity * delta
 	traveled_distance += velocity.length() * delta
 	
+	#Rotar la botella en el aire
+	rotation.x += rotation_speed.x * delta
+	rotation.y += rotation_speed.y * delta
+	rotation.z += rotation_speed.z * delta
+	
 	# Desaparecer si viajó demasiado
 	if traveled_distance > max_distance:
-		print("🍺 Cerveza desapareció por distancia")
 		queue_free()
 		return
 	
 	# Gravedad leve
 	velocity.y -= Constants.PLAYER_GRAVITY * delta * 0.5
 	
-	# ← NUEVO: Detección manual de enemigos cercanos
+	# Detección manual de enemigos cercanos
 	_check_collision_with_enemies()
 
 func setup(spawn_position: Vector3, direction: Vector3, speed: float) -> void:
@@ -73,8 +79,6 @@ func _hit_enemy(enemy: Node3D) -> void:
 		var direction = velocity.normalized()
 		var adjusted_knockback = knockback * (1.0 - Constants.ENEMY_KNOCKBACK_RESIST)
 		enemy.take_knockback(direction * adjusted_knockback)
-	
-	print("🍺 ¡Cerveza impactó a ", enemy.name, "!")
 	
 	# Desaparecer después del impacto
 	queue_free()

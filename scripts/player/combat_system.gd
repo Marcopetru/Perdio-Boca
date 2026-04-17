@@ -102,11 +102,14 @@ func _create_beer_projectile() -> void:
 	get_tree().get_root().add_child(projectile)
 	
 	# Configurar posición y dirección
-	var spawn_pos = player.global_position + Vector3(0, 1.5, 0)
-	# Usar basis.z en lugar de -basis.z para que vaya en la dirección correcta
+	# Salir más adelante (1.5 en lugar de 1.0) y más a la altura correcta
+	var spawn_pos = player.global_position + Vector3(0, 1.2, 0) + player.global_transform.basis.z * 0.8
+	
+	# Usar basis.z para que vaya en la dirección correcta
 	var direction = player.global_transform.basis.z
 	
-	projectile.setup(spawn_pos, direction, 15.0)
+	# Velocidad más baja (10.0 en lugar de 15.0)
+	projectile.setup(spawn_pos, direction, 10.0)
 
 func _play_sound(sound_path: String) -> void:
 	"""Reproduce un sonido de efecto"""

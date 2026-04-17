@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://24tlvgcxqt2c"]
+
+[ext_resource type="Script" uid="uid://fhm8mf1x77y8" path="res://scripts/ui/credits_screen.gd" id="1_uwft3"]
+[ext_resource type="FontFile" uid="uid://c7md4rdl552ja" path="res://assets/models/MeaCulpa-Regular.ttf" id="2_h6ve6"]
+
+[node name="CreditsScreen" type="Control" unique_id=1952262504]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uwft3")
+
+[node name="BackGroundImage" type="TextureRect" parent="." unique_id=377105069]
+modulate = Color(0.0627451, 0.24705882, 0.4745098, 1)
+self_modulate = Color(0.0627451, 0.24705882, 0.4745098, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=983165093]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/scroll_hint_vertical_color = Color(0.0627451, 0.24705882, 0.4745098, 1)
+theme_override_colors/scroll_hint_horizontal_color = Color(0.0627451, 0.24705882, 0.4745098, 1)
+
+[node name="CreditsContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=792442763]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Fin" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=339930583]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 160
+text = "Fin"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=1816554518]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="Producción" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=885645801]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 50
+text = "Producción"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Productores" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=412550225]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 30
+text = "Marco Petruccelli"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=2070798700]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="GameDesign" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=1774464444]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 50
+text = "Game Design"
+horizontal_alignment = 1
+
+[node name="GameDesigners" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=707794785]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 30
+text = "Marco Petruccelli
+Gastón Ceballos"
+horizontal_alignment = 1
+
+[node name="Control3" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=318989872]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Programacion" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=385610191]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 50
+text = "Programación"
+horizontal_alignment = 1
+
+[node name="Programadores" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=1671011436]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 30
+text = "Marco Petruccelli"
+horizontal_alignment = 1
+
+[node name="Control4" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=1882649585]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Arte_Animación" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=1098454176]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 50
+text = "Arte/Animación"
+horizontal_alignment = 1
+
+[node name="Animadores" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=1740070400]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 30
+text = "Gastón Ceballos
+"
+horizontal_alignment = 1
+
+[node name="Control5" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=1077904436]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Musica" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=1223414706]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 50
+text = "Musica/Efectos"
+horizontal_alignment = 1
+
+[node name="Musico" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=768050221]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 30
+text = "Felipe Bruno"
+horizontal_alignment = 1
+
+[node name="Control6" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=872708928]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Agradecimientos" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=336762043]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 60
+text = "Agrademos al Gobierno de la Ciudad Autónoma de Buenos Aires"
+horizontal_alignment = 1
+
+[node name="Control7" type="Control" parent="ScrollContainer/CreditsContainer" unique_id=1646054410]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/CreditsContainer" unique_id=1717619700]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6862745, 0.54509807, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_h6ve6")
+theme_override_font_sizes/font_size = 130
+text = "Gracias por Jugar"
+horizontal_alignment = 1
